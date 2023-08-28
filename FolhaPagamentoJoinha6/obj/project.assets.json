@@ -10404,11 +10404,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Felipe\\source\\repos\\FolhaPagamentoJoinha6\\FolhaPagamentoJoinha6.csproj",
+      "projectUniqueName": "C:\\Users\\Felipe\\Documents\\GitHub\\FolhaPagamentoAspNetCore\\FolhaPagamentoJoinha6\\FolhaPagamentoJoinha6.csproj",
       "projectName": "FolhaPagamentoJoinha6",
-      "projectPath": "C:\\Users\\Felipe\\source\\repos\\FolhaPagamentoJoinha6\\FolhaPagamentoJoinha6.csproj",
+      "projectPath": "C:\\Users\\Felipe\\Documents\\GitHub\\FolhaPagamentoAspNetCore\\FolhaPagamentoJoinha6\\FolhaPagamentoJoinha6.csproj",
       "packagesPath": "C:\\Users\\Felipe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Felipe\\source\\repos\\FolhaPagamentoJoinha6\\obj\\",
+      "outputPath": "C:\\Users\\Felipe\\Documents\\GitHub\\FolhaPagamentoAspNetCore\\FolhaPagamentoJoinha6\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
