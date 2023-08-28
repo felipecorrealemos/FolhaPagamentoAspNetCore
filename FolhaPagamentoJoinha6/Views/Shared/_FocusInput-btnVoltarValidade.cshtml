@@ -1,0 +1,25 @@
+﻿
+
+<script>
+    function voltar() {
+        // Remove as classes de validação e vermelho dos campos
+        $('.form-group').removeClass('has-validation');
+        $('.text-danger').empty();
+
+        // Navega para a página anterior
+        window.history.back();
+    }
+
+    $(document).ready(function () {
+        // Ao focar em um campo de entrada, mover o cursor para o final do texto
+        $('input[type="text"]').on('focus', function () {
+            var input = $(this);
+            var length = input.val().length;
+
+            // Defina um atraso para permitir que o campo receba foco completamente
+            setTimeout(function () {
+                input[0].setSelectionRange(length, length);
+            }, 0);
+        });
+    });
+</script>

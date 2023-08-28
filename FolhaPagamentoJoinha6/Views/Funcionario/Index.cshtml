@@ -1,0 +1,66 @@
+﻿@model IEnumerable<FolhaPagamentoJoinha6.Models.Funcionario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Funcionarios</h1>
+<div class="col-md-2 mt-4">
+    <form>
+        <button type="submit" class="btn btn-primary" asp-action="Create">Criar novo funcionario</button>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idPessoa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nomePessoa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tipoContrato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cargo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idFilial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idDepartamento)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="align-content-center">
+                    @Html.DisplayFor(modelItem => item.idPessoa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nomePessoa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tipoContrato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cargo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idFilial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idDepartamento)
+                </td>
+                <td>
+                    <a class="btn btn-outline-secondary mr-2" href="@Url.Action("Details", new {  id=item.idPessoa  })">Details</a>
+                    <a class="btn btn-outline-success mr-2" href="@Url.Action("Edit", new {  id=item.idPessoa  })">Edit</a>
+                    <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

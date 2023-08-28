@@ -1,0 +1,48 @@
+﻿<script>
+    // O código será executado quando a página estiver pronta
+    document.addEventListener("DOMContentLoaded", function () {
+        // Verifica se a mensagem de sucesso está sendo exibida
+        var successMessage = document.getElementById("successMessage");
+        if (successMessage) {
+            // Define o tempo de atraso (em milissegundos) antes de iniciar a animação
+            var delayDuration = 2000; // 2 segundos
+
+            // Após o atraso, inicia a animação de saída
+            setTimeout(function () {
+                // Define o tempo de duração da animação (em milissegundos)
+                var animationDuration = 1000; // 1 segundo
+
+                // Define a animação para deslizar para fora da tela
+                successMessage.style.transition = "transform " + (animationDuration / 1000) + "s ease-in-out";
+                successMessage.style.transform = "translateX(150%)";
+
+                // Após a animação de saída da tela, remove a mensagem do DOM
+                setTimeout(function () {
+                    successMessage.parentNode.removeChild(successMessage);
+                }, animationDuration);
+            }, delayDuration);
+        }
+
+        // Verifica se a mensagem de erro está sendo exibida
+        var errorMessage = document.getElementById("errorMessage");
+        if (errorMessage) {
+            // Define o tempo de atraso (em milissegundos) antes de iniciar a animação
+            var delayDuration = 4000; // 2 segundos
+
+            // Após o atraso, inicia a animação de saída
+            setTimeout(function () {
+                // Define o tempo de duração da animação (em milissegundos)
+                var animationDuration = 1000; // 1 segundo
+
+                // Define a animação para deslizar para fora da tela
+                errorMessage.style.transition = "transform " + (animationDuration / 1000) + "s ease-in-out";
+                errorMessage.style.transform = "translateX(150%)";
+
+                // Após a animação de saída da tela, remove a mensagem do DOM
+                setTimeout(function () {
+                    errorMessage.parentNode.removeChild(errorMessage);
+                }, animationDuration);
+            }, delayDuration);
+        }
+    });
+</script>

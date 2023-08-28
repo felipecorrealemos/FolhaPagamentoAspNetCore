@@ -1,0 +1,12 @@
+﻿@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successMessage" class="m-0 alert alert-success alert-dismissible" role="alert" style="position: absolute; top: 20px; right: 20px; z-index: 1000;">
+        <strong>@TempData["SuccessMessage"]</strong>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div id="errorMessage" class="m-0 alert alert-danger alert-dismissible" role="alert" style="position: absolute; top: 20px; right: 20px; z-index: 1000;">
+        <strong>@TempData["ErrorMessage"]</strong>
+    </div>
+}

@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    var listaFilial = ViewData["ListaFilial"] as List<Filial>;
+}
+
+<h1>Filial de @listaFilial[0].razaoSocial</h1>
+
+<partial name="_AlertsPartial">
+
+    <form>
+        <input type="hidden" name="idEmpresa" value="@listaFilial[0].idEmpresa" />
+        <button type="submit" class="btn btn-primary" asp-action="Create">Criar nova filial</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    idFilial
+                </th>
+                <th>
+                    cnpjFilial
+                </th>
+                <th>
+                    email
+                </th>
+                <th>
+                    nomeFantasia
+                </th>
+
+                <th>
+                    idEmpresa
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (listaFilial != null)
+            {
+                foreach (var item in listaFilial)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.idFilial)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cnpjFilial)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nomeFantasia)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.idEmpresa)
+                        </td>
+
+                        <td>
+                            <a class="btn btn-outline-secondary mr-2" href="@Url.Action("Details", new {  id=item.idEmpresa  })">Details</a>
+                            <a class="btn btn-outline-success mr-2" href="@Url.Action("Edit", new {  id=item.idEmpresa  })">Edit</a>
+                            <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+
+            <partial name="_info-message">
+        </tbody>
+    </table>
+
+    <div mt-5 mb-5">
+        <form asp-controller="Empresa" asp-action="Index">
+            <button class="btn btn-secondary"  onclick="voltar()">Back to Empresas</button>
+        </form>
+    </div>

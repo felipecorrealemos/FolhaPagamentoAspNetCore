@@ -1,0 +1,204 @@
+﻿@model FolhaPagamentoJoinha6.Models.Funcionario
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Funcionario</h4>
+<hr />
+<div class="row">
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div hidden class="form-group">
+                <label asp-for="idPessoa" class="control-label"></label>
+                <input asp-for="idPessoa" class="form-control" />
+                <span asp-validation-for="idPessoa" class="text-danger"></span>
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-md-5 col-sm-12">
+                    <label asp-for="nomePessoa" class="control-label"></label>
+                    <input asp-for="nomePessoa" class="form-control" />
+                    <span asp-validation-for="nomePessoa" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4 col-sm-12">
+                    <label asp-for="nomeSocial" class="control-label"></label>
+                    <input asp-for="nomeSocial" class="form-control" />
+                    <span asp-validation-for="nomeSocial" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-3 col-4">
+                    <label asp-for="dataNascimento" class="control-label"></label>
+                    <input asp-for="dataNascimento" class="form-control" />
+                    <span asp-validation-for="dataNascimento" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-md-10 col-sm-12">
+                    <label asp-for="endereco.rua" class="control-label"></label>
+                    <input asp-for="endereco.rua" class="form-control" />
+                    <span asp-validation-for="endereco.rua" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-2">
+                    <label asp-for="endereco.numero" class="control-label"></label>
+                    <input asp-for="endereco.numero" class="form-control" />
+                    <span asp-validation-for="endereco.numero" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-md-3 col-sm-12">
+                    <label asp-for="endereco.bairro" class="control-label"></label>
+                    <input asp-for="endereco.bairro" class="form-control" />
+                    <span asp-validation-for="endereco.bairro" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-3 col-sm-12">
+                    <label asp-for="endereco.cidade" class="control-label"></label>
+                    <input asp-for="endereco.cidade" class="form-control" />
+                    <span asp-validation-for="endereco.cidade" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-12">
+                    <label asp-for="endereco.uf" class="control-label"></label>
+                    <input asp-for="endereco.uf" class="form-control" />
+                    <span asp-validation-for="endereco.uf" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4 col-sm-12">
+                    <label asp-for="endereco.cep" class="control-label"></label>
+                    <input asp-for="endereco.cep" class="form-control" />
+                    <span asp-validation-for="endereco.cep" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-md-4 col-sm-12">
+                    <label asp-for="documentosPessoais.CPF" class="control-label"></label>
+                    <input asp-for="documentosPessoais.CPF" class="form-control" />
+                    <span asp-validation-for="documentosPessoais.CPF" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4 col-sm-12">
+                    <label asp-for="documentosPessoais.RG" class="control-label"></label>
+                    <input asp-for="documentosPessoais.RG" placeholder="00.000.000-0" class="form-control" />
+                    <span asp-validation-for="documentosPessoais.RG" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4 col-sm-12">
+                    <label asp-for="documentosPessoais.PIS" class="control-label"></label>
+                    <input asp-for="documentosPessoais.PIS" class="form-control" />
+                    <span asp-validation-for="documentosPessoais.PIS" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-md-5 col-sm-12">
+                    <label asp-for="cargo" class="control-label"></label>
+                    <input asp-for="cargo" class="form-control" />
+                    <span asp-validation-for="cargo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-12">
+                    <label asp-for="tipoContrato" class="control-label"></label>
+                    <input asp-for="tipoContrato" class="form-control" />
+                    <span asp-validation-for="tipoContrato" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-12">
+                    <label asp-for="jornadaTrabalho" class="control-label"></label>
+                    <input asp-for="jornadaTrabalho" class="form-control" />
+                    <span asp-validation-for="jornadaTrabalho" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-3 col-sm-12">
+                    <label asp-for="promocoes" class="control-label"></label>
+                    <input asp-for="promocoes" class="form-control" />
+                    <span asp-validation-for="promocoes" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <div class="form-group col-5">
+                    <label asp-for="idFilial" class="control-label"></label>
+                    <input asp-for="idFilial" class="form-control" />
+                    <span asp-validation-for="idFilial" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-5">
+                    <label asp-for="idDepartamento" class="control-label"></label>
+                    <input asp-for="idDepartamento" class="form-control" />
+                    <span asp-validation-for="idDepartamento" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-3">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="pagaPensao" /> @Html.DisplayNameFor(model => model.pagaPensao)
+                    </label>
+                </div>
+
+                <div class="form-group col-3">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="PCD" /> @Html.DisplayNameFor(model => model.PCD)
+                    </label>
+                </div>
+
+                <div class="form-group col-3">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="optanteVT" /> @Html.DisplayNameFor(model => model.optanteVT)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-4">
+                    <label asp-for="escolaridade" class="control-label"></label>
+                    <input asp-for="escolaridade" class="form-control" />
+                    <span asp-validation-for="escolaridade" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-4">
+                    <label asp-for="grupoEtnico" class="control-label"></label>
+                    <input asp-for="grupoEtnico" class="form-control" />
+                    <span asp-validation-for="grupoEtnico" class="text-danger"></span>
+                </div>
+            </div>
+           
+            <div class="form-group mt-5 mb-5">
+                <button class="btn btn-secondary" formaction="@Url.Action("Index")" onclick="voltar()">Back to List</button>
+                <input type="submit" value="Salvar" class="btn btn-success" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function voltar() {
+        // Remove as classes de validação e vermelho dos campos
+        $('.form-group').removeClass('has-validation');
+        $('.text-danger').empty();
+
+        // Navega para a página anterior
+        window.history.back();
+    }
+</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

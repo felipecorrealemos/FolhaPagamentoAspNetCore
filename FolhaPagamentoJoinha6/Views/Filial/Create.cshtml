@@ -1,0 +1,94 @@
+﻿@model FolhaPagamentoJoinha6.Models.Filial
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Filial</h4>
+<hr />
+<div class="row ">
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div hidden class="form-group">
+                <label asp-for="idFilial" class="control-label"></label>
+                <input asp-for="idFilial" class="form-control" />
+                <span asp-validation-for="idFilial" class="text-danger"></span>
+            </div>
+
+            <div hidden class="mb-3 col-md-6 col-12">
+                <label asp-for="idEmpresa" class="control-label"></label>
+                <input asp-for="idEmpresa" class="form-control" />
+                <span asp-validation-for="idEmpresa" class="text-danger"></span>
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-md-6 col-12">
+                    <label asp-for="razaoSocial" class="control-label"></label>
+                    <input asp-for="razaoSocial" class="form-control" disabled />
+                </div>
+
+                <div class="form-group col-md-6 col-12">
+                    <label asp-for="cnpjBase" class="control-label"></label>
+                    <input asp-for="cnpjBase" class="form-control" disabled />
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-md-6 col-12">
+                    <label asp-for="nomeFantasia" class="control-label"></label>
+                    <input asp-for="nomeFantasia" class="form-control" />
+                    <span asp-validation-for="nomeFantasia" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6 col-12">
+                    <label asp-for="cnpjFilial" class="control-label"></label>
+                    <input asp-for="cnpjFilial" class="form-control" />
+                    <span asp-validation-for="cnpjFilial" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-6 col-12 mb-3">
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-12 mb-3">
+                <label asp-for="observacoes" class="control-label"></label>
+                <textarea asp-for="observacoes" class="form-control"></textarea>
+                <span asp-validation-for="observacoes" class="text-danger"></span>
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-md-3 col-12">
+                    <label asp-for="rat" class="control-label"></label>
+                    <input asp-for="rat" class="form-control" />
+                    <span asp-validation-for="rat" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3 col-12">
+                    <label asp-for="fap" class="control-label"></label>
+                    <input asp-for="fap" class="form-control" />
+                    <span asp-validation-for="fap" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group mt-5 mb-5">
+
+                <a class="btn btn-secondary" asp-controller="Empresa" asp-action="Index">Back to List</a>
+                <input type="submit" value="Salvar" class="btn btn-success" />
+            </div>
+
+            <partial name="_FocusInput-btnVoltarValidade">
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

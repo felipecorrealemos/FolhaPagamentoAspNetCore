@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4 animate__animated animate__bounce">Bem Vindo a Joinha Devs</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+</div>
+
+<form method="get">
+    <div class="row">
+        <div class="form-group col-3">
+            <button type="submit" class="btn btn-primary" asp-controller="Funcionario" asp-action="Index">Funcionarios</button>
+        </div>
+        <div class="form-group col-3">
+            <button type="submit" class="btn btn-primary" asp-controller="Empresa" asp-action="Index">
+                <i class="bi bi-arrow-left-short"></i>Empresas
+            </button>
+        </div>
+        
+    </div>
+</form>

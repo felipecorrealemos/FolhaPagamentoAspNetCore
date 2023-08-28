@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    var listaEmpresa = ViewData["ListaEmpresa"] as List<EmpresaCliente>;
+}
+
+<h1 class="animate__animated animate__fadeInLeft">Empresas</h1>
+
+<partial name="_AlertsPartial">
+
+    <div class="col-md-2 mt-4">
+        <form>
+            <button type="submit" class="btn btn-primary" asp-action="Create">Criar nova empresa</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Razão Social
+                </th>
+                <th>
+                    Nome Fantasia
+                </th>
+                <th>
+                    CNPJ base
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (listaEmpresa != null)
+            {
+                foreach (var empresa in listaEmpresa)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => empresa.idEmpresa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => empresa.razaoSocial)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => empresa.cnpjBase)
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-secondary mr-2" href="@Url.Action("Create", new {idEmpresa=empresa.idEmpresa })">Editar</a>
+                            <a class="btn btn-outline-success mr-2" href="@Url.Action("VerFilial", new {  idEmpresa=empresa.idEmpresa })">Filial</a>
+                            <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+
+            else
+            {
+                <tr>
+                    <td>0</td>
+                    <td>nenhum resultado</td>
+                    <td>0</td>
+                </tr>
+            }
+            <partial name="_info-message">
+
+        </tbody>
+    </table>
