@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using NuGet.Protocol.Plugins;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,33 +17,73 @@ namespace FolhaPagamentoJoinha6.Models
         public string razaoSocial { get; set; }
 
         [Required(ErrorMessage = mensagemValidacao)]
-        public string cnpjBase { get; set; }
+        public string cnpj { get; set; }
 
-        public CargosSalarios cargosSalarios { get; set; }
-        public List<Filial> listaFilial { get; set; }
+        [Required(ErrorMessage = mensagemValidacao)]
+        public string nomeFantasia { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
+        public string apelido { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
+        public string empresaMae { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
+        public bool ehMatriz { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
+        public string email { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
+        public string telefone { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
+        public string observacao { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
+        public Endereco endereco { get; set; }
+
 
         private const string mensagemValidacao = "Preenchimento Obrigatório!";
 
-        public static void CriarEmpresaEFilial1(IFormCollection collection)
+        public static bool CriarEmpresaEFilial1(IFormCollection collection, out string? mensagemErro)
         {
             EmpresaCliente empresa = CarregaObjeto(collection);
             Conexao objConexao = new Conexao();
 
             string sql = $"INSERT INTO tb_empresaCliente (razaoSocial, cnpjBase) " +
                 $"VALUES (@razaosocial, @cnpjbase); " +
-                $"SELECT * FROM tb_empresaCliente WHERE idEmpresa = SCOPE_IDENTITY();";
+                $"SELECT SCOPE_IDENTITY();";
 
             int newID;
 
-            using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection))
+            using (SqlTransaction transaction = objConexao.sqlConnection.BeginTransaction())
             {
-                command.Parameters.AddWithValue("@razaosocial", empresa.razaoSocial.Trim());
-                command.Parameters.AddWithValue("@cnpjbase", empresa.cnpjBase.Trim());
+                try
+                {
+                    using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@razaosocial", empresa.razaoSocial.Trim());
+                        command.Parameters.AddWithValue("@cnpjbase", empresa.cnpjBase.Trim());
 
-                objConexao.ExecutarComandoSql(command, out newID);
+                        objConexao.ExecutarComandoSql(command, out newID, true);
+                    }
+
+                    Filial.CriarFilial(collection, newID);
+
+                    //commit aqui
+                    objConexao.Commit(transaction, objConexao.sqlConnection);
+                    mensagemErro = null;
+                    return true;
+                }
+
+                catch (Exception ex)
+                {
+                    objConexao.Rollback(transaction, objConexao.sqlConnection);
+                    mensagemErro = ex.Message;
+                    return false;
+                }
             }
-
-            Filial.CriarFilial(collection, newID);
         }
 
         public static Filial GetEmpresaEFilial1(int idEmpresa)
@@ -138,7 +179,7 @@ namespace FolhaPagamentoJoinha6.Models
                 command.Parameters.AddWithValue("@razaoSocial", empresa.razaoSocial.Trim());
                 command.Parameters.AddWithValue("@cnpjBase", empresa.cnpjBase.Trim());
 
-                objConexao.ExecutarComandoSql(command);
+                objConexao.ExecutarComandoSql(command, false);
             }
         }
 

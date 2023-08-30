@@ -29,6 +29,12 @@ namespace FolhaPagamentoJoinha6.Models
         {
             Filial filial = new Filial().CarregaObjetoFilial1(collection);
             filial.idEmpresa = idEmpresa;
+
+            if (string.IsNullOrEmpty(filial.cnpjFilial))
+            {
+                //filial.cnpjFilial = filial.cnpjBase;
+            }
+
             Conexao objConexao = new Conexao();
 
             string sql = $"INSERT INTO tb_filial (idEmpresa, cnpjFilial, eMail, nomeFantasia, observacoes)" +
@@ -42,7 +48,7 @@ namespace FolhaPagamentoJoinha6.Models
                 command.Parameters.AddWithValue("@nomeFantasia", filial.nomeFantasia.Trim());
                 command.Parameters.AddWithValue("@observacoes", filial.observacoes.Trim());
 
-                objConexao.ExecutarComandoSql(command);
+                objConexao.ExecutarComandoSql(command,false);
             }
         }
 
@@ -63,7 +69,7 @@ namespace FolhaPagamentoJoinha6.Models
                 command.Parameters.AddWithValue("@nomeFantasia", filial.nomeFantasia?.Trim());
                 command.Parameters.AddWithValue("@observacoes", filial.observacoes?.Trim());
 
-                objConexao.ExecutarComandoSql(command);
+                objConexao.ExecutarComandoSql(command, false);
             }
         }
 

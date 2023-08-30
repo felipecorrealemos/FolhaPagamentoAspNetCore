@@ -40,6 +40,8 @@ namespace FolhaPagamentoJoinha6.Controllers
         // POST: EmpresaController/Create
         public ActionResult Salvar(IFormCollection collection)
         {
+            Conexao conexao = new Conexao();
+
             try
             {
                 //validacao CNPJ
@@ -61,8 +63,15 @@ namespace FolhaPagamentoJoinha6.Controllers
 
                 else
                 {
-                    EmpresaCliente.CriarEmpresaEFilial1(collection);
-                    TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
+                    if (EmpresaCliente.CriarEmpresaEFilial1(collection, out string? mensagemErro))
+                    {
+                        TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
+                    }
+
+                    else
+                    {
+                        TempData["ErrorMessage"] = $"Erro, {mensagemErro}.";
+                    }
                 }
 
             }

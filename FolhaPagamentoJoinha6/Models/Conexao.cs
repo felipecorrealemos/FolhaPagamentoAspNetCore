@@ -14,6 +14,7 @@ namespace FolhaPagamentoJoinha6.Models
         //private string connectionString = $"Server={server};Database={database};Trusted_Connection=True;";
 
         public SqlConnection sqlConnection = new SqlConnection();
+        private SqlTransaction transaction;
 
         public Conexao()
         {
@@ -21,18 +22,26 @@ namespace FolhaPagamentoJoinha6.Models
             sqlConnection.Open();
         }
 
-        public void ExecutarComandoSql(SqlCommand command)
+        public void ExecutarComandoSql(SqlCommand command, bool isTransaction)
         {
             command.Connection = sqlConnection;
             command.ExecuteNonQuery();
-            sqlConnection.Close();
+
+            if (!isTransaction)
+            {
+                sqlConnection.Close();
+            }
         }
 
-        public void ExecutarComandoSql(SqlCommand command, out int newID)
+        public void ExecutarComandoSql(SqlCommand command, out int newID, bool isTransaction)
         {
             command.Connection = sqlConnection;
-            newID = (int)command.ExecuteScalar();
-            sqlConnection.Close();
+            newID = Convert.ToInt32(command.ExecuteScalar());
+            
+            if (isTransaction)
+            {
+                sqlConnection.Close();
+            }
         }
 
         public DataTable RetornaDataTable(string sql)
@@ -44,6 +53,26 @@ namespace FolhaPagamentoJoinha6.Models
             sqlConnection.Close();
 
             return dt;
+        }
+
+        public SqlTransaction ConexaoBegin()
+        {
+            //sqlConnection = new SqlConnection(connectionString);
+            //sqlConnection.Open();
+
+            return transaction = sqlConnection.BeginTransaction();
+        }
+
+        public void Commit(SqlTransaction transaction, SqlConnection sqlConnection)
+        {
+            transaction.Commit();
+            sqlConnection.Close();
+        }
+
+        public void Rollback(SqlTransaction transaction, SqlConnection sqlConnection)
+        {
+            transaction.Rollback();
+            sqlConnection.Close();
         }
     }
 }
