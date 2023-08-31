@@ -38,7 +38,7 @@ namespace FolhaPagamentoJoinha6.Models
             command.Connection = sqlConnection;
             newID = Convert.ToInt32(command.ExecuteScalar());
             
-            if (isTransaction)
+            if (!isTransaction)
             {
                 sqlConnection.Close();
             }

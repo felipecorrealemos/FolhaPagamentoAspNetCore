@@ -24,6 +24,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wcmVzYVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Empresa/_CriarEmpresaPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wcmVzYVxfQ3JpYXJFbXByZXNhUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Empresa/_CriarEnderecoPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wcmVzYVxfQ3JpYXJFbmRlcmVjb1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Filial/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsaWFsXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

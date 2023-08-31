@@ -79,7 +79,7 @@ namespace FolhaPagamentoJoinha6.Models
             {
                 razaoSocial = collection["razaoSocial"],
                 nomeFantasia = collection["nomeFantasia"],
-                cnpjBase = collection["cnpjBase"],
+                //cnpjBase = collection["cnpjBase"],
                 cnpjFilial = collection?["cnpjFilial"],
                 email = collection["email"],
                 observacoes = collection["observacoes"]

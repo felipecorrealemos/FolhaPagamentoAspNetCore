@@ -1,0 +1,53 @@
+﻿@model FolhaPagamentoJoinha6.Models.EmpresaCliente
+
+@{
+    ViewData["Title"] = "Create";
+    var empresa = ViewData["Empresa"] as EmpresaCliente;
+}
+
+<div hidden class="form-group">
+    <label asp-for="idEmpresa" class="control-label"></label>
+    <input asp-for="idEmpresa" class="form-control" value="@((empresa?.idEmpresa))" />
+    <span asp-validation-for="idEmpresa" class="text-danger"></span>
+</div>
+
+<div class="row mb-3">
+    <div class="form-group col-md-6 col-12">
+        <label asp-for="razaoSocial" class="control-label"></label>
+        <input asp-for="razaoSocial" class="form-control" value="@((empresa?.razaoSocial) ?? "")" />
+    </div>
+
+    <div class="form-group col-md-6 col-12">
+        <label asp-for="cnpj" class="control-label"></label>
+        <input asp-for="cnpj" class="form-control" value="@((empresa?.cnpj) ?? "")" />
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="form-group col-md-6 col-12">
+        <label asp-for="nomeFantasia" class="control-label"></label>
+        <input asp-for="nomeFantasia" class="form-control" value="@((empresa?.nomeFantasia) ?? "")" />
+        <span asp-validation-for="nomeFantasia" class="text-danger"></span>
+    </div>
+
+    <div class="form-group col-md-6 col-12">
+        <label asp-for="apelido" class="control-label"></label>
+        <input asp-for="apelido" class="form-control" value="@((empresa?.apelido) ?? "")" />
+        <span asp-validation-for="apelido" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-6 col-12 mb-3">
+        <label asp-for="empresaMae" class="control-label"></label>
+        <input asp-for="empresaMae" class="form-control" value="@((empresa?.empresaMae) ?? "")" />
+        <span asp-validation-for="empresaMae" class="text-danger"></span>
+    </div>
+
+    <div class="form-group col-3 mb-3">
+        <label asp-for="ehMatriz" class="form-check-label">
+            <input asp-for="ehMatriz" class="form-check-input" checked="@(empresa?.ehMatriz == true ? "checked" : null)" />
+        </label>
+    </div>
+</div>
+

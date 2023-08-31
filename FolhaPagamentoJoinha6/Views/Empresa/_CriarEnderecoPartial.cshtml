@@ -1,0 +1,54 @@
+﻿@model FolhaPagamentoJoinha6.Models.Endereco
+
+@{
+    ViewData["Title"] = "Create";
+    var endereco = ViewData["Endereco"] as Endereco;
+}
+
+
+<div class="row mb-3">
+    <div class="form-group col-md-6 col-12">
+        <label asp-for="rua" class="control-label"></label>
+        <input asp-for="rua" class="form-control" value="@((endereco?.rua) ?? "")" />
+        <span asp-validation-for="rua" class="text-danger"></span>
+    </div>
+
+    <div class="form-group col-2">
+        <label asp-for="numero" class="control-label"></label>
+        <input asp-for="numero" class="form-control" value="@((endereco?.numero))" />
+        <span asp-validation-for="rua" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="form-group col-md-3 col-12">
+        <label asp-for="bairro" class="control-label"></label>
+        <input asp-for="bairro" class="form-control" value="@((endereco?.bairro) ?? "")" />
+
+    </div>
+
+    <div class="form-group col-md-3 col-12">
+        <label asp-for="cidade" class="control-label"></label>
+        <input asp-for="cidade" class="form-control" value="@((endereco?.cidade) ?? "")" />
+
+    </div>
+    <div class="form-group col-md-2 col-12">
+        <label asp-for="estado" class="control-label"></label>
+        <input asp-for="estado" class="form-control" value="@((endereco?.cidade) ?? "")" />
+
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="form-group col-3">
+        <label asp-for="cep" class="control-label"></label>
+        <input asp-for="cep" class="form-control" value="@((endereco?.cep) ?? "")" />
+
+    </div>
+
+    <div class="form-group col-3">
+        <label asp-for="pais" class="control-label"></label>
+        <input asp-for="pais" class="form-control" value="@((endereco?.pais) ?? "")" />
+
+    </div>
+</div>

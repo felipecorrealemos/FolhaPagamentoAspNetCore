@@ -9,7 +9,7 @@ namespace FolhaPagamentoJoinha6.Controllers
         {
             try
             {
-                List<EmpresaCliente> listaEmpresas = new EmpresaCliente().GetListaEmpresas();
+                List<EmpresaCliente> listaEmpresas = EmpresaCliente.GetListaEmpresas();
                 ViewData["ListaEmpresa"] = listaEmpresas;
             }
 
@@ -26,11 +26,11 @@ namespace FolhaPagamentoJoinha6.Controllers
         {
             if (idEmpresa.HasValue)
             {
-                Filial empresaEFilial1 = EmpresaCliente.GetEmpresaEFilial1((int)idEmpresa);
+                EmpresaCliente empresa = EmpresaCliente.GetEmpresa(idEmpresa);
 
-                if (empresaEFilial1 != null)
+                if (empresa != null)
                 {
-                    ViewData["Filial"] = empresaEFilial1;
+                    ViewData["Empresa"] = empresa;
                 }
             }
 
@@ -40,12 +40,12 @@ namespace FolhaPagamentoJoinha6.Controllers
         // POST: EmpresaController/Create
         public ActionResult Salvar(IFormCollection collection)
         {
-            Conexao conexao = new Conexao();
+           // Conexao conexao = new Conexao();
 
             try
             {
                 //validacao CNPJ
-                if (EmpresaCliente.VerificaCNPJExiste(collection))
+               /* if (EmpresaCliente.VerificaCNPJExiste(collection))
                 {
                     ModelState.AddModelError("cnpjBase", "CNPJ já cadastrado.");
                     Filial filial = new Filial().CarregaObjetoFilial1(collection);
@@ -62,8 +62,8 @@ namespace FolhaPagamentoJoinha6.Controllers
                 }
 
                 else
-                {
-                    if (EmpresaCliente.CriarEmpresaEFilial1(collection, out string? mensagemErro))
+                {*/
+                    if (EmpresaCliente.CriarEmpresaEEndereco(collection, out string? mensagemErro))
                     {
                         TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
                     }
@@ -72,7 +72,7 @@ namespace FolhaPagamentoJoinha6.Controllers
                     {
                         TempData["ErrorMessage"] = $"Erro, {mensagemErro}.";
                     }
-                }
+                //}
 
             }
             catch (Exception ex)
@@ -83,20 +83,5 @@ namespace FolhaPagamentoJoinha6.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult VerFilial(int idEmpresa)
-        {
-            try
-            {
-                TempData["idEmpresa"] = idEmpresa;
-                return RedirectToAction("Index", "Filial");
-            }
-
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
     }
 }

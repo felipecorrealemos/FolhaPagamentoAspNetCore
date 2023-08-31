@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 
 namespace FolhaPagamentoJoinha6.Models
@@ -19,100 +20,84 @@ namespace FolhaPagamentoJoinha6.Models
         [Required(ErrorMessage = mensagemValidacao)]
         public string cnpj { get; set; }
 
-        [Required(ErrorMessage = mensagemValidacao)]
-        public string nomeFantasia { get; set; }
+        public string? nomeFantasia { get; set; }
 
-        [Required(ErrorMessage = mensagemValidacao)]
-        public string apelido { get; set; }
+        public string? apelido { get; set; }
 
-        [Required(ErrorMessage = mensagemValidacao)]
-        public string empresaMae { get; set; }
+        public string? empresaMae { get; set; }
 
-        [Required(ErrorMessage = mensagemValidacao)]
         public bool ehMatriz { get; set; }
 
-        [Required(ErrorMessage = mensagemValidacao)]
-        public string email { get; set; }
+        public string? email { get; set; }
 
-        [Required(ErrorMessage = mensagemValidacao)]
-        public string telefone { get; set; }
+        public string? telefone { get; set; }
 
-        [Required(ErrorMessage = mensagemValidacao)]
-        public string observacao { get; set; }
+        public string? observacao { get; set; }
 
-        [Required(ErrorMessage = mensagemValidacao)]
-        public Endereco endereco { get; set; }
-
+        public int? idEndereco { get; set; }
 
         private const string mensagemValidacao = "Preenchimento Obrigatório!";
 
-        public static bool CriarEmpresaEFilial1(IFormCollection collection, out string? mensagemErro)
+        private static bool CriarEmpresa(IFormCollection collection, int idEndereco, Conexao objConexao, SqlTransaction sqlTransaction, out string? mensagemErro)
         {
             EmpresaCliente empresa = CarregaObjeto(collection);
-            Conexao objConexao = new Conexao();
+            empresa.idEndereco = idEndereco;
 
-            string sql = $"INSERT INTO tb_empresaCliente (razaoSocial, cnpjBase) " +
-                $"VALUES (@razaosocial, @cnpjbase); " +
-                $"SELECT SCOPE_IDENTITY();";
+            string sql = $"INSERT INTO tb_empresaCliente (razaoSocial, cnpj, nomeFantasia, apelido, empresaMae, ehMatriz, " +
+                $" idEndereco) " +
+                $"VALUES (@razaoSocial, @cnpj, @nomeFantasia, @apelido, @empresaMae, @ehMatriz, @idEndereco);";
 
             int newID;
 
-            using (SqlTransaction transaction = objConexao.sqlConnection.BeginTransaction())
+            try
             {
-                try
+                using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection, sqlTransaction))
                 {
-                    using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection, transaction))
-                    {
-                        command.Parameters.AddWithValue("@razaosocial", empresa.razaoSocial.Trim());
-                        command.Parameters.AddWithValue("@cnpjbase", empresa.cnpjBase.Trim());
+                    command.Parameters.AddWithValue("@razaoSocial", empresa.razaoSocial?.Trim());
+                    command.Parameters.AddWithValue("@cnpj", empresa.cnpj?.Trim());
+                    command.Parameters.AddWithValue("@nomeFantasia", empresa.nomeFantasia?.Trim());
+                    command.Parameters.AddWithValue("@apelido", empresa.apelido?.Trim());
+                    command.Parameters.AddWithValue("@empresaMae", empresa.empresaMae?.Trim());
+                    command.Parameters.AddWithValue("@ehMatriz", empresa.ehMatriz);
+                    command.Parameters.AddWithValue("@idEndereco", empresa.idEndereco);
 
-                        objConexao.ExecutarComandoSql(command, out newID, true);
-                    }
-
-                    Filial.CriarFilial(collection, newID);
-
-                    //commit aqui
-                    objConexao.Commit(transaction, objConexao.sqlConnection);
-                    mensagemErro = null;
-                    return true;
+                    objConexao.ExecutarComandoSql(command, true);
                 }
 
-                catch (Exception ex)
-                {
-                    objConexao.Rollback(transaction, objConexao.sqlConnection);
-                    mensagemErro = ex.Message;
-                    return false;
-                }
+                mensagemErro = null;
+                return true;
             }
+
+            catch (Exception ex)
+            {
+                mensagemErro = ex.Message;
+                return false;
+            }
+
         }
 
-        public static Filial GetEmpresaEFilial1(int idEmpresa)
+        public static bool CriarEmpresaEEndereco(IFormCollection collection, out string? mensagemErro)
         {
             Conexao objConexao = new Conexao();
-            Filial filial = new Filial();
+            SqlTransaction transaction = objConexao.sqlConnection.BeginTransaction();
 
-            string sql = "SELECT * FROM tb_filial " +
-                "INNER JOIN tb_empresaCliente ON tb_filial.idEmpresa = tb_empresaCliente.idEmpresa " +
-                $"WHERE tb_filial.idEmpresa = '{idEmpresa}'";
-            DataTable dt = objConexao.RetornaDataTable(sql);
-
-            if (dt.Rows.Count > 0)
+            if (!Endereco.CriaEndereco(collection, objConexao, transaction, out int idEndereco, out mensagemErro))
             {
-                DataRow row = dt.Rows[0];
-                filial.idEmpresa = Convert.ToInt32(row["idEmpresa"]);
-                filial.razaoSocial = row["razaoSocial"].ToString();
-                filial.cnpjBase = row["cnpjBase"].ToString();
-                filial.idFilial = Convert.ToInt32(row["idEmpresa"]);
-                filial.cnpjFilial = row["cnpjFilial"].ToString();
-                filial.nomeFantasia = row["nomeFantasia"]?.ToString();
-                filial.email = row["email"]?.ToString();
-                filial.observacoes = row["observacoes"]?.ToString();
+                return false;
             }
 
-            return filial;
+            if (!CriarEmpresa(collection, idEndereco, objConexao, transaction, out mensagemErro))
+            {
+                objConexao.Rollback(transaction, objConexao.sqlConnection);
+                return false;
+            }
+
+            objConexao.Commit(transaction, objConexao.sqlConnection);
+            mensagemErro = null;
+            return true;
         }
 
-        public List<EmpresaCliente> GetListaEmpresas()
+        public static List<EmpresaCliente> GetListaEmpresas()
         {
             Conexao objConexao = new Conexao();
             List<EmpresaCliente> listaEmpresa = new List<EmpresaCliente>();
@@ -122,13 +107,7 @@ namespace FolhaPagamentoJoinha6.Models
 
             foreach (DataRow row in dt.Rows)
             {
-                EmpresaCliente empresa = new EmpresaCliente()
-                {
-                    idEmpresa = Convert.ToInt32(row["idEmpresa"]),
-                    razaoSocial = row["razaoSocial"].ToString(),
-                    cnpjBase = row["cnpjBase"].ToString(),
-                };
-
+                EmpresaCliente empresa = CarregaObjeto(row);
                 listaEmpresa.Add(empresa);
             }
 
@@ -143,12 +122,7 @@ namespace FolhaPagamentoJoinha6.Models
 
             if (dt.Rows.Count > 0)
             {
-                EmpresaCliente empresa = new EmpresaCliente()
-                {
-                    idEmpresa = Convert.ToInt32(dt.Rows[0]["idEmpresa"]),
-                    razaoSocial = dt.Rows[0]["razaoSocial"].ToString(),
-                    cnpjBase = dt.Rows[0]["cnpjBase"].ToString(),
-                };
+                EmpresaCliente empresa = CarregaObjeto(dt.Rows[0]);
 
                 return empresa;
             }
@@ -165,7 +139,7 @@ namespace FolhaPagamentoJoinha6.Models
             {
                 idEmpresa = Convert.ToInt32(collection["idEmpresa"]),
                 razaoSocial = collection["razaoSocial"],
-                cnpjBase = collection["cnpjBase"],
+                // cnpjBase = collection["cnpjBase"],
             };
 
             Conexao objConexao = new Conexao();
@@ -177,7 +151,7 @@ namespace FolhaPagamentoJoinha6.Models
             {
                 command.Parameters.AddWithValue("@idEmpresa", empresa.idEmpresa);
                 command.Parameters.AddWithValue("@razaoSocial", empresa.razaoSocial.Trim());
-                command.Parameters.AddWithValue("@cnpjBase", empresa.cnpjBase.Trim());
+                //command.Parameters.AddWithValue("@cnpjBase", empresa.cnpjBase.Trim());
 
                 objConexao.ExecutarComandoSql(command, false);
             }
@@ -204,8 +178,34 @@ namespace FolhaPagamentoJoinha6.Models
         {
             EmpresaCliente empresaCliente = new EmpresaCliente()
             {
-                cnpjBase = collection["cnpjBase"],
-                razaoSocial = collection["razaoSocial"]
+                razaoSocial = collection["razaoSocial"].ToString(),
+                cnpj = collection["cnpj"].ToString(),
+                nomeFantasia = collection["nomeFantasia"].ToString(),
+                apelido = collection["apelido"].ToString(),
+                empresaMae = collection["empresaMae"].ToString(),
+
+                idEndereco = Convert.ToInt32(collection["idEndereco"])
+            };
+
+            if (collection["ehMatriz"].Count > 1)
+            {
+                empresaCliente.ehMatriz = true;
+            }
+
+            return empresaCliente;
+        }
+
+        public static EmpresaCliente CarregaObjeto(DataRow dataRow)
+        {
+            EmpresaCliente empresaCliente = new EmpresaCliente()
+            {
+                razaoSocial = dataRow["razaoSocial"]?.ToString(),
+                cnpj = dataRow["cnpj"]?.ToString(),
+                nomeFantasia = dataRow["nomeFantasia"]?.ToString(),
+                apelido = dataRow["apelido"]?.ToString(),
+                empresaMae = dataRow["empresaMae"]?.ToString(),
+                ehMatriz = Convert.ToBoolean(dataRow["ehMatriz"]),
+                idEndereco = Convert.ToInt32(dataRow["idEndereco"])
             };
 
             return empresaCliente;

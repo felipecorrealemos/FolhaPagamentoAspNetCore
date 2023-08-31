@@ -33,7 +33,7 @@ namespace FolhaPagamentoJoinha6.Controllers
             Filial filial = new Filial() { idEmpresa = idEmpresa };
             EmpresaCliente empresaCliente = EmpresaCliente.GetEmpresa(idEmpresa);
             filial.razaoSocial = empresaCliente.razaoSocial;
-            filial.cnpjBase = empresaCliente.cnpjBase;
+            //filial.cnpjBase = empresaCliente.cnpjBase;
 
             return View(filial);
         }
