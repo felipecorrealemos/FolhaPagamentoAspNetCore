@@ -14,12 +14,12 @@
 <div class="row mb-3">
     <div class="form-group col-md-6 col-12">
         <label asp-for="razaoSocial" class="control-label"></label>
-        <input asp-for="razaoSocial" class="form-control" value="@((empresa?.razaoSocial) ?? "")" />
+        <input asp-for="razaoSocial" placeholder="ex: Botica Comercial Farmaceutica LTDA – O Boticário" class="form-control" value="@((empresa?.razaoSocial) ?? "")" />
     </div>
 
     <div class="form-group col-md-6 col-12">
         <label asp-for="cnpj" class="control-label"></label>
-        <input asp-for="cnpj" class="form-control" value="@((empresa?.cnpj) ?? "")" />
+        <input asp-for="cnpj" placeholder="ex: 00.000.000/0000-00" class="form-control" value="@((empresa?.cnpj) ?? "")" />
     </div>
 </div>
 
@@ -37,17 +37,9 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="form-group col-md-6 col-12 mb-3">
-        <label asp-for="empresaMae" class="control-label"></label>
-        <input asp-for="empresaMae" class="form-control" value="@((empresa?.empresaMae) ?? "")" />
-        <span asp-validation-for="empresaMae" class="text-danger"></span>
-    </div>
-
-    <div class="form-group col-3 mb-3">
-        <label asp-for="ehMatriz" class="form-check-label">
-            <input asp-for="ehMatriz" class="form-check-input" checked="@(empresa?.ehMatriz == true ? "checked" : null)" />
-        </label>
-    </div>
+<div class="row mb-3">
+    <label class="control-label col-2">ehMatriz?</label>
+    <input name="ehMatriz" type="checkbox" checked="checked" value="true" hidden />
+    <input class="form-check-input form-group col-1" disabled type="checkbox" checked="checked" />
 </div>
 

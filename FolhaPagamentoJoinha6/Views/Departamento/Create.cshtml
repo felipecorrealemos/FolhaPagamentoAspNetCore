@@ -1,0 +1,53 @@
+﻿@model FolhaPagamentoJoinha6.Models.Departamento
+
+@{
+    ViewData["Title"] = "Create";
+    var empresaMae = ViewData["empresaMae"] as EmpresaCliente;
+}
+
+<h1>Create departamento para @empresaMae?.razaoSocial</h1>
+
+<h4>Departamento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Salvar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div hidden class="form-group">
+                <label asp-for="idDepartamento" class="control-label"></label>
+                <input asp-for="idDepartamento" class="form-control" />
+                <span asp-validation-for="idDepartamento" class="text-danger"></span>
+            </div>
+
+            <div hidden class="form-group col-md-6 mb-3">
+                <label class="control-label"></label>
+                <input asp-for="idEmpresa" class="form-control" />
+                <span asp-validation-for="idEmpresa" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label class="control-label">Empresa Matriz</label>
+                <input disabled class="form-control" value="@((empresaMae?.razaoSocial) ?? "")" />
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label asp-for="departamentoNome" class="control-label"></label>
+                <input asp-for="departamentoNome" class="form-control" />
+                <span asp-validation-for="departamentoNome" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-5 mb-5">
+                <a class="btn btn-secondary" asp-controller="Departamento" asp-action="Index">Back to List</a>
+                <input type="submit" class="btn btn-success" />
+            </div>
+
+            <partial name="_FocusInput-btnVoltarValidade">
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

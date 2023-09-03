@@ -9,7 +9,7 @@ namespace FolhaPagamentoJoinha6.Controllers
         {
             try
             {
-                List<EmpresaCliente> listaEmpresas = EmpresaCliente.GetListaEmpresas();
+                List<EmpresaCliente> listaEmpresas = EmpresaCliente.GetListaEmpresasMatriz();
                 ViewData["ListaEmpresa"] = listaEmpresas;
             }
 
@@ -27,10 +27,12 @@ namespace FolhaPagamentoJoinha6.Controllers
             if (idEmpresa.HasValue)
             {
                 EmpresaCliente empresa = EmpresaCliente.GetEmpresa(idEmpresa);
+                Endereco endereco = Endereco.GetEndereco(empresa.idEndereco);
 
                 if (empresa != null)
                 {
                     ViewData["Empresa"] = empresa;
+                    ViewData["Endereco"] = endereco;
                 }
             }
 
@@ -40,38 +42,38 @@ namespace FolhaPagamentoJoinha6.Controllers
         // POST: EmpresaController/Create
         public ActionResult Salvar(IFormCollection collection)
         {
-           // Conexao conexao = new Conexao();
+            // Conexao conexao = new Conexao();
 
             try
             {
                 //validacao CNPJ
-               /* if (EmpresaCliente.VerificaCNPJExiste(collection))
-                {
-                    ModelState.AddModelError("cnpjBase", "CNPJ já cadastrado.");
-                    Filial filial = new Filial().CarregaObjetoFilial1(collection);
+                /* if (EmpresaCliente.VerificaCNPJExiste(collection))
+                 {
+                     ModelState.AddModelError("cnpjBase", "CNPJ já cadastrado.");
+                     Filial filial = new Filial().CarregaObjetoFilial1(collection);
 
-                    ViewData["Filial"] = filial;
-                    return View("Create");
-                }
+                     ViewData["Filial"] = filial;
+                     return View("Create");
+                 }
 
-                if (!string.IsNullOrEmpty(collection["idEmpresa"]))
+                 if (!string.IsNullOrEmpty(collection["idEmpresa"]))
+                 {
+                     EmpresaCliente.AlterarEmpresa(collection);
+                     Filial.AlterarFilial1(collection);
+                     TempData["SuccessMessage"] = "Registro alterado com sucesso.";
+                 }
+
+                 else
+                 {*/
+                if (EmpresaCliente.CriarEmpresaEEndereco(collection, out string? mensagemErro))
                 {
-                    EmpresaCliente.AlterarEmpresa(collection);
-                    Filial.AlterarFilial1(collection);
-                    TempData["SuccessMessage"] = "Registro alterado com sucesso.";
+                    TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
                 }
 
                 else
-                {*/
-                    if (EmpresaCliente.CriarEmpresaEEndereco(collection, out string? mensagemErro))
-                    {
-                        TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
-                    }
-
-                    else
-                    {
-                        TempData["ErrorMessage"] = $"Erro, {mensagemErro}.";
-                    }
+                {
+                    TempData["ErrorMessage"] = $"Erro, {mensagemErro}.";
+                }
                 //}
 
             }
@@ -83,5 +85,36 @@ namespace FolhaPagamentoJoinha6.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult VerFilial(int idEmpresa)
+        {
+            try
+            {
+                TempData["idEmpresa"] = idEmpresa;
+                return RedirectToAction("Index", "Filial");
+            }
+
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult VerDepartamento(int idEmpresa)
+        {
+            try
+            {
+                //TempData["idEmpresa"] = idEmpresa;
+                return RedirectToAction("Index", "Departamento", new { idEmpresa });
+            }
+
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

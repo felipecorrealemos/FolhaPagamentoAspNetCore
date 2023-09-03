@@ -1,0 +1,55 @@
+﻿@model FolhaPagamentoJoinha6.Models.Cargo
+
+@{
+    ViewData["Title"] = "Create";
+    var departamento = ViewData["Departamento"] as Departamento;
+    var cargo = ViewData["Cargo"] as Cargo;
+
+}
+
+<h1>Create departamento para @departamento?.departamentoNome</h1>
+
+<h4>Departamento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Salvar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div hidden class="form-group">
+                <label asp-for="idDepartamento" class="control-label"></label>
+                <input asp-for="idDepartamento" class="form-control" value="@((departamento?.idDepartamento))" />
+                <span asp-validation-for="idDepartamento" class="text-danger"></span>
+            </div>
+
+            <div hidden class="form-group col-md-6 mb-3">
+                <label class="control-label"></label>
+                <input asp-for="idCargo" class="form-control" value="@((cargo?.cargoNome) ?? "")" />
+                <span asp-validation-for="idCargo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label  class="control-label">Nome Cargo</label>
+                <input asp-for="cargoNome" class="form-control" value="@((cargo?.cargoNome) ?? "")" />
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label asp-for="salarioBase" class="control-label"></label>
+                <input asp-for="salarioBase" class="form-control" />
+                <span asp-validation-for="salarioBase" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-5 mb-5">
+                <a class="btn btn-secondary" asp-controller="Cargo" asp-action="Index" asp-route-idDepartamento="@departamento?.idDepartamento">Back to List</a>
+                <input type="submit" class="btn btn-success" />
+            </div>
+
+            <partial name="_FocusInput-btnVoltarValidade">
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<FolhaPagamentoJoinha6.Models.Departamento>
+
+@{
+    ViewData["Title"] = "Index";
+    var listaDepartamento = ViewData["ListaDepartamento"] as List<Departamento>;
+    var empresaMae = ViewData["empresaMae"] as EmpresaCliente;
+}
+
+<h1 class="mb-3">Departamentos de @empresaMae?.razaoSocial</h1>
+
+<partial name="_AlertsPartial">
+    <form class="mb-3">
+        <input hidden name="idEmpresa" value="@empresaMae?.empresaMae" />
+        <button type="submit" asp-action="Create" class="btn btn-primary">Criar novo Departamento</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.idDepartamento)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.departamentoNome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.idEmpresa)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(model => model.totalCargo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (listaDepartamento != null)
+            {
+                @foreach (var item in listaDepartamento)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.idDepartamento)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.departamentoNome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.idEmpresa)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.totalCargo)
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-secondary mr-2 disabled" href="@Url.Action("Details", new {  })">Details</a>
+                            <a class="btn btn-outline-success mr-2 disabled" href="@Url.Action("Edit", new {  id=item.idDepartamento  })">Edit</a>
+                            <a class="btn btn-outline-success mr-2" href="@Url.Action("verCargo", new {  idDepartamento=item.idDepartamento  })">Ver Cargos</a>
+                            <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+
+            else
+            {
+                <tr>
+                    <td>0</td>
+                    <td>nenhum resultado</td>
+                    <td>0</td>
+                </tr>
+            }
+
+            <partial name="_info-message">
+        </tbody>
+    </table>
+
+    <div class="mt-5 mb-5">
+        <form asp-controller="Empresa" asp-action="Index">
+            <button class="btn btn-secondary" onclick="voltar()">Back to Empresas</button>
+        </form>
+    </div>

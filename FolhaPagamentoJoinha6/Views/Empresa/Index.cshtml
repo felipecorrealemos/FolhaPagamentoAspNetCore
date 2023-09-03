@@ -19,13 +19,19 @@
                     ID
                 </th>
                 <th>
+                    CNPJ
+                </th>
+                <th>
                     Razão Social
                 </th>
                 <th>
                     Nome Fantasia
                 </th>
                 <th>
-                    CNPJ base
+                    Apelido
+                </th>
+                <th>
+                    E-mail
                 </th>
                 <th></th>
             </tr>
@@ -40,14 +46,24 @@
                             @Html.DisplayFor(modelItem => empresa.idEmpresa)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => empresa.cnpj)
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => empresa.razaoSocial)
                         </td>
                         <td>
-                            
+                            @Html.DisplayFor(modelItem => empresa.nomeFantasia)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => empresa.apelido)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => empresa.email)
                         </td>
                         <td>
                             <a class="btn btn-outline-secondary mr-2" href="@Url.Action("Create", new {idEmpresa=empresa.idEmpresa })">Editar</a>
                             <a class="btn btn-outline-success mr-2" href="@Url.Action("VerFilial", new {  idEmpresa=empresa.idEmpresa })">Filial</a>
+                            <a class="btn btn-outline-success mr-2" href="@Url.Action("VerDepartamento", new {  idEmpresa=empresa.idEmpresa })">Departamentos</a>
                             <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
                         </td>
                     </tr>

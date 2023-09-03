@@ -16,6 +16,22 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Felipe\Documents\GitHub\FolhaPagamentoAspNetCore\FolhaPagamentoJoinha6
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Cargo/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZ29cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Cargo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZ29cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Departamento/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Departamento/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Empresa/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wcmVzYVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -38,6 +54,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Filial/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsaWFsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Filial/_CriarEnderecoFilialPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsaWFsXF9DcmlhckVuZGVyZWNvRmlsaWFsUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Filial/_CriarFilialPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsaWFsXF9DcmlhckZpbGlhbFBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Funcionario/Create.cshtml]

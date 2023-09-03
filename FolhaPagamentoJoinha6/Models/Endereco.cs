@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Transactions;
 using System.Web;
@@ -10,6 +11,7 @@ namespace FolhaPagamentoJoinha6.Models
 {
     public class Endereco
     {
+        public int idEndereco { get; set; }
         [Required(ErrorMessage = mensagemValidacao)]
         public int? numero { get; set; }
         [Required(ErrorMessage = mensagemValidacao)]
@@ -71,6 +73,42 @@ namespace FolhaPagamentoJoinha6.Models
             };
 
             return endereco;
+        }
+
+        public static Endereco CarregaObjeto(DataRow dataRow)
+        {
+            Endereco endereco = new Endereco()
+            {
+                idEndereco = Convert.ToInt32(dataRow["idEndereco"]),
+                numero = Convert.ToInt32(dataRow["numero"]),
+                rua = dataRow["rua"]?.ToString(),
+                bairro = dataRow["bairro"]?.ToString(),
+                cidade = dataRow["cidade"]?.ToString(),
+                estado = dataRow["estado"]?.ToString(),
+                cep = dataRow["cep"]?.ToString(),
+                pais = dataRow["pais"]?.ToString()
+
+            };
+
+            return endereco;
+        }
+
+        public static Endereco? GetEndereco(int? idEndereco)
+        {
+            Conexao objConexao = new Conexao();
+            string sql = $"SELECT * FROM tb_endereco WHERE idEndereco = '{idEndereco}';";
+            DataTable dt = objConexao.RetornaDataTable(sql);
+
+            if (dt.Rows.Count > 0)
+            {
+                Endereco endereco = CarregaObjeto(dt.Rows[0]);
+                return endereco;
+            }
+
+            else
+            {
+                return null;
+            }
         }
     }
 }

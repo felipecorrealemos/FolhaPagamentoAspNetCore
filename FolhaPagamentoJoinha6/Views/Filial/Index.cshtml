@@ -1,15 +1,18 @@
-﻿@{
+﻿@model FolhaPagamentoJoinha6.Models.EmpresaCliente
+
+@{
     ViewData["Title"] = "Index";
-    var listaFilial = ViewData["ListaFilial"] as List<Filial>;
+    var listaFilial = ViewData["ListaFilial"] as List<EmpresaCliente>;
+    var empresaMae = ViewData["empresaMae"] as EmpresaCliente;
 }
 
-<h1>Filial de @listaFilial[0].razaoSocial</h1>
+<h1>Filial de @empresaMae?.razaoSocial</h1>
 
 <partial name="_AlertsPartial">
 
     <form>
-        <input type="hidden" name="idEmpresa" value="@listaFilial[0].idEmpresa" />
-        <button type="submit" class="btn btn-primary" asp-action="Create">Criar nova filial</button>
+        <input type="hidden" asp-for="empresaMae" value="@empresaMae?.empresaMae" />
+        <button type="submit" asp-action="Create" class="btn btn-primary">Criar nova filial</button>
     </form>
     <table class="table">
         <thead>
@@ -18,7 +21,7 @@
                     idFilial
                 </th>
                 <th>
-                    cnpjFilial
+                    CNPJ
                 </th>
                 <th>
                     email
@@ -28,35 +31,35 @@
                 </th>
 
                 <th>
-                    idEmpresa
+                    idEmpresaMae
                 </th>
             </tr>
         </thead>
         <tbody>
             @if (listaFilial != null)
             {
-                foreach (var item in listaFilial)
+                foreach (var empresa in listaFilial)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.idFilial)
+                            @Html.DisplayFor(modelItem => empresa.idEmpresa)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.cnpjFilial)
+                            @Html.DisplayFor(modelItem => empresa.cnpj)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.email)
+                            @Html.DisplayFor(modelItem => empresa.email)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.nomeFantasia)
+                            @Html.DisplayFor(modelItem => empresa.nomeFantasia)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.idEmpresa)
+                            @Html.DisplayFor(modelItem => empresa.empresaMae)
                         </td>
 
                         <td>
-                            <a class="btn btn-outline-secondary mr-2" href="@Url.Action("Details", new {  id=item.idEmpresa  })">Details</a>
-                            <a class="btn btn-outline-success mr-2" href="@Url.Action("Edit", new {  id=item.idEmpresa  })">Edit</a>
+                            <a class="btn btn-outline-secondary mr-2 disabled"  href="@Url.Action("Details", new {  id=empresa.idEmpresa  })">Details</a>
+                            <a class="btn btn-outline-success mr-2 disabled" href="@Url.Action("Edit", new {  id=empresa.idEmpresa  })">Edit</a>
                             <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
                         </td>
                     </tr>
@@ -67,7 +70,7 @@
         </tbody>
     </table>
 
-    <div mt-5 mb-5">
+    <div class="mt-5 mb-5">
         <form asp-controller="Empresa" asp-action="Index">
             <button class="btn btn-secondary"  onclick="voltar()">Back to Empresas</button>
         </form>
