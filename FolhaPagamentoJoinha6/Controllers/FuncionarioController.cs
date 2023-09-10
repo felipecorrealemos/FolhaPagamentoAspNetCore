@@ -39,6 +39,31 @@ namespace FolhaPagamentoJoinha6.Controllers
             return View(listaFuncionario);
         }
 
+        public ActionResult GerarPontoMensal(int? qtdHorasSem, int? qtdDiasTrab)
+        {
+            try
+            {
+                //TimeSpan timeSpan = RegistroPonto.GerarRegistroPontoMesInteiroAutomatico(40, 20);
+                List<RegistroPontoDiario> listaPonto = RegistroPonto.GerarListaRegistroPontoMesInteiroAutomatico(40, 20, out string horasExtras);
+
+                ViewData["horasExtras"] = horasExtras;
+                ViewData["listaRegistroPontoDiario"] = listaPonto;
+                //  TempData["SuccessMessage"] = "Registro calculado com sucesso.";
+            }
+
+            catch (Exception ex)
+            {
+                // TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
+            }
+
+            return View("RegistroPontoAutomatico");
+        }
+
+        public ActionResult RegistroPontoAutomatico()
+        {
+            return View();
+        }
+
         // GET: FuncionarioController/Details/5
         public ActionResult Details(int id)
         {

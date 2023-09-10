@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    var listaPonto = ViewData["listaRegistroPontoDiario"] as List<RegistroPontoDiario>;
+    var horasExtras = ViewData["horasExtras"] as string;
+}
+
+<h1>Automação</h1>
+<h4>Gerar Ponto Randomicamente</h4>
+<hr />
+
+<div>
+    <partial name="_AlertsPartial">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <button type="submit" class="btn btn-secondary" asp-action="GerarPontoMensal">Calcular</button>
+            <button type="button" class="btn btn-outline-dark" id="btnPrint">Imprimir</button>
+            <div class="row mt-3 mb-3">
+                <div class="col-2">
+                    <label class="control-label">Total Horas Extras</label>
+                    <input disabled class="form-control" value="@horasExtras" />
+                </div>
+            </div>
+
+            @if (listaPonto != null)
+            {
+                @for (int i = 0; i < listaPonto?.Count; i++)
+                {
+                    <div class="row" style="margin-bottom:1px; height:50px">
+                        <div style="width:5px; text-align:center; align-content:center; margin-top:25px; height:35px; margin-left: 5px" class="form-group col-1">
+                            <label style="text-align:center; margin-top:5px; font-size:larger;" class="control-label">@(i + 1)</label>
+                        </div>
+                        <div style="margin-bottom:0" class="form-group col-2">
+                            <label class="control-label"></label>
+                            <input class="form-control" value="@((listaPonto?[i].entrada.ToString(@"hh\:mm")) ?? "")" />
+
+                        </div>
+                        <div class="form-group col-2">
+                            <label class="control-label"></label>
+                            <input class="form-control" value="@((listaPonto?[i].saidaAlmoco.ToString(@"hh\:mm")) ?? "")" />
+                        </div>
+                        <div class="form-group col-2">
+                            <label class="control-label"></label>
+                            <input class="form-control" value="@((listaPonto?[i].retornoAlmoco.ToString(@"hh\:mm")) ?? "")" />
+                        </div>
+                        <div class="form-group col-2">
+                            <label class="control-label"></label>
+                            <input class="form-control" value="@((listaPonto?[i].saida.ToString(@"hh\:mm")) ?? "")" />
+                        </div>
+                    </div>
+                }
+            }
+
+            else
+            {
+                @for (int i = 1; i <= 20; i++)
+                {
+                    <div class="row" style=" margin-bottom:1px; height:50px" >
+                        <div style="width:5px; text-align:center; align-content:center; margin-top:25px; height:35px; margin-left: 5px" class=" col-1">
+                            <label style="text-align:center; margin-top:5px; font-size:larger;" class="control-label">@i</label>
+                        </div>
+
+                        <div style="text-align:center" class="form-group col-1">
+                            <label class="control-label"></label>
+                            <input class="form-control" />
+                        </div>
+
+                        <div style="text-align:center" class="form-group col-1">
+                            <label class="control-label"></label>
+                            <input class="form-control" />
+                        </div>
+
+                        <div style="text-align:center" class="form-group col-1">
+                            <label class="control-label"></label>
+                            <input class="form-control" />
+                        </div>
+
+                        <div style="text-align:center" class="form-group col-1">
+                            <label class="control-label"></label>
+                            <input class="form-control" />
+                        </div>
+                    </div>
+                }
+            }
+
+            <script>
+                document.getElementById("btnPrint").addEventListener("click", function () {
+                    window.print();
+                });
+            </script>
+
+            <partial name="_FocusInput-btnVoltarValidade">
+        </form>
+</div>
+
+<partial name="_info-message">
+    <div class="mt-5 mb-5">
+        <form asp-controller="Empresa" asp-action="Index">
+            <button class="btn btn-secondary" onclick="voltar()">Back to Empresas</button>
+        </form>
+    </div>
