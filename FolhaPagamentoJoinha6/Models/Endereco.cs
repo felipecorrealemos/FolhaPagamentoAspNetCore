@@ -1,25 +1,34 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Linq;
-using System.Transactions;
-using System.Web;
 
 namespace FolhaPagamentoJoinha6.Models
 {
     public class Endereco
     {
-        public int idEndereco { get; set; }
+        public int enderecoId { get; set; }
+
         [Required(ErrorMessage = mensagemValidacao)]
-        public int? numero { get; set; }
+        public string? cep { get; set; }
+
         [Required(ErrorMessage = mensagemValidacao)]
         public string? rua { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
         public string? bairro { get; set; }
+
+        public string? complemento { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
+        public int? numero { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
         public string? cidade { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
         public string? estado { get; set; }
-        public string? cep { get; set; }
+
+        [Required(ErrorMessage = mensagemValidacao)]
         public string? pais { get; set; }
 
         private const string mensagemValidacao = "Preenchimento Obrigatório!";
@@ -29,7 +38,7 @@ namespace FolhaPagamentoJoinha6.Models
             Endereco endereco = new Endereco().CarregaObjeto(collection);
             newID = 0;
 
-            string sql = $"INSERT INTO tb_endereco (numero, rua, bairro, cidade, estado, cep, pais) " +
+            string sql = $"INSERT INTO enderecos (numero, rua, bairro, cidade, estado, cep, pais) " +
                 $"VALUES (@numero, @rua, @bairro, @cidade, @estado, @cep, @pais);" +
             $"SELECT SCOPE_IDENTITY();";
 
@@ -69,7 +78,8 @@ namespace FolhaPagamentoJoinha6.Models
                 cidade = collection["cidade"],
                 estado = collection["estado"],
                 cep = collection["cep"],
-                pais = collection["pais"]
+                pais = collection["pais"],
+                complemento = collection["pais"].ToString()
             };
 
             return endereco;
@@ -79,24 +89,24 @@ namespace FolhaPagamentoJoinha6.Models
         {
             Endereco endereco = new Endereco()
             {
-                idEndereco = Convert.ToInt32(dataRow["idEndereco"]),
+                enderecoId = Convert.ToInt32(dataRow["enderecoId"]),
                 numero = Convert.ToInt32(dataRow["numero"]),
                 rua = dataRow["rua"]?.ToString(),
                 bairro = dataRow["bairro"]?.ToString(),
                 cidade = dataRow["cidade"]?.ToString(),
                 estado = dataRow["estado"]?.ToString(),
                 cep = dataRow["cep"]?.ToString(),
-                pais = dataRow["pais"]?.ToString()
-
+                pais = dataRow["pais"]?.ToString(),
+                complemento = dataRow["pais"]?.ToString()
             };
 
             return endereco;
         }
 
-        public static Endereco? GetEndereco(int? idEndereco)
+        public static Endereco? GetEndereco(int? enderecoId)
         {
             Conexao objConexao = new Conexao();
-            string sql = $"SELECT * FROM tb_endereco WHERE idEndereco = '{idEndereco}';";
+            string sql = $"SELECT * FROM enderecos WHERE enderecoId = '{enderecoId}';";
             DataTable dt = objConexao.RetornaDataTable(sql);
 
             if (dt.Rows.Count > 0)

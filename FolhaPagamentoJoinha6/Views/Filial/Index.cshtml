@@ -42,7 +42,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => empresa.idEmpresa)
+                            @Html.DisplayFor(modelItem => empresa.empresaId)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => empresa.cnpj)
@@ -58,8 +58,8 @@
                         </td>
 
                         <td>
-                            <a class="btn btn-outline-secondary mr-2 disabled"  href="@Url.Action("Details", new {  id=empresa.idEmpresa  })">Details</a>
-                            <a class="btn btn-outline-success mr-2 disabled" href="@Url.Action("Edit", new {  id=empresa.idEmpresa  })">Edit</a>
+                            <a class="btn btn-outline-secondary mr-2 disabled" href="@Url.Action("Details", new {  id=empresa.empresaId  })">Details</a>
+                            <a class="btn btn-outline-success mr-2 disabled" href="@Url.Action("Edit", new {  id=empresa.empresaId  })">Edit</a>
                             <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
                         </td>
                     </tr>

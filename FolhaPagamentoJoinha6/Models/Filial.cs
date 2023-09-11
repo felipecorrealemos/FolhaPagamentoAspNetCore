@@ -28,7 +28,7 @@ namespace FolhaPagamentoJoinha6.Models
         public static void CriarFilial(IFormCollection collection, int idEmpresa)
         {
             Filial filial = new Filial().CarregaObjetoFilial1(collection);
-            filial.idEmpresa = idEmpresa;
+            filial.empresaId = idEmpresa;
 
             if (string.IsNullOrEmpty(filial.cnpjFilial))
             {
@@ -42,7 +42,7 @@ namespace FolhaPagamentoJoinha6.Models
 
             using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection))
             {
-                command.Parameters.AddWithValue("@idEmpresa", filial.idEmpresa);
+                command.Parameters.AddWithValue("@idEmpresa", filial.empresaId);
                 command.Parameters.AddWithValue("@cnpjFilial", filial.cnpjFilial.Trim());
                 command.Parameters.AddWithValue("@eMail", filial.email.Trim());
                 command.Parameters.AddWithValue("@nomeFantasia", filial.nomeFantasia.Trim());
@@ -87,7 +87,7 @@ namespace FolhaPagamentoJoinha6.Models
 
             if (!string.IsNullOrEmpty(collection["idEmpresa"]))
             {
-                filial.idEmpresa = Convert.ToInt32(collection["idEmpresa"]);
+                filial.empresaId = Convert.ToInt32(collection["idEmpresa"]);
             }
 
             /*
@@ -107,7 +107,7 @@ namespace FolhaPagamentoJoinha6.Models
             Filial filial = new Filial()
             {
                 idFilial = Convert.ToInt32(row["idFilial"]),
-                idEmpresa = Convert.ToInt32(row["idEmpresa"]),
+                empresaId = Convert.ToInt32(row["empresaId"]),
                 nomeFantasia = row["nomeFantasia"]?.ToString(),
                 cnpjFilial = row["cnpjFilial"]?.ToString(),
                 email = row["email"]?.ToString(),

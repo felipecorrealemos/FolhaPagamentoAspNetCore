@@ -9,46 +9,50 @@
 <div class="row mb-3">
     <div class="form-group col-md-6 col-12">
         <label asp-for="rua" class="control-label"></label>
-        <input asp-for="rua" class="form-control" value="@((endereco?.rua) ?? "")" />
+        <input asp-for="rua" maxlength="64" class="form-control" value="@((endereco?.rua) ?? "")" />
         <span asp-validation-for="rua" class="text-danger"></span>
     </div>
 
     <div class="form-group col-2">
         <label asp-for="numero" class="control-label"></label>
         <input asp-for="numero" class="form-control" value="@((endereco?.numero))" />
-        <span asp-validation-for="rua" class="text-danger"></span>
+        <span asp-validation-for="numero" class="text-danger"></span>
+    </div>
+    <div class="form-group col-2">
+        <label asp-for="complemento" class="control-label"></label>
+        <input asp-for="complemento" maxlength="255" class="form-control" value="@((endereco?.complemento))" />
     </div>
 </div>
 
 <div class="row mb-3">
     <div class="form-group col-md-3 col-12">
         <label asp-for="bairro" class="control-label"></label>
-        <input asp-for="bairro" class="form-control" value="@((endereco?.bairro) ?? "")" />
-
+        <input asp-for="bairro" maxlength="32" class="form-control" value="@((endereco?.bairro) ?? "")" />
+        <span asp-validation-for="bairro" class="text-danger"></span>
     </div>
 
     <div class="form-group col-md-3 col-12">
         <label asp-for="cidade" class="control-label"></label>
-        <input asp-for="cidade" class="form-control" value="@((endereco?.cidade) ?? "")" />
-
+        <input asp-for="cidade" maxlength="32" class="form-control" value="@((endereco?.cidade) ?? "")" />
+        <span asp-validation-for="cidade" class="text-danger"></span>
     </div>
     <div class="form-group col-md-2 col-12">
         <label asp-for="estado" class="control-label"></label>
-        <input asp-for="estado" class="form-control" value="@((endereco?.cidade) ?? "")" />
-
+        <input asp-for="estado" maxlength="2" class="form-control" value="@((endereco?.cidade) ?? "")" />
+        <span asp-validation-for="estado" class="text-danger"></span>
     </div>
 </div>
 
 <div class="row mb-3">
     <div class="form-group col-3">
         <label asp-for="cep" class="control-label"></label>
-        <input asp-for="cep" class="form-control" value="@((endereco?.cep) ?? "")" />
-
+        <input asp-for="cep" maxlength="8" class="form-control" value="@((endereco?.cep) ?? "")" />
+        <span asp-validation-for="cep" class="text-danger"></span>
     </div>
 
     <div class="form-group col-3">
         <label asp-for="pais" class="control-label"></label>
-        <input asp-for="pais" class="form-control" value="@((endereco?.pais) ?? "")" />
-
+        <input asp-for="pais" maxlength="32" class="form-control" value="@((endereco?.pais) ?? "")" />
+        <span asp-validation-for="pais" class="text-danger"></span>
     </div>
 </div>

@@ -9,34 +9,12 @@ namespace FolhaPagamentoJoinha6.Controllers
         // GET: FuncionarioController
         public ActionResult Index()
         {
-            /* List<EmpresaCliente> listaEmpresaCliente = new List<EmpresaCliente>();
-
-             EmpresaCliente empresaCliente = new EmpresaCliente();
-             empresaCliente.idEmpresa = 1;
-             empresaCliente.RazaoSocial = "nomeTesteRazaoSocial1";
-             empresaCliente.cnpjBase = "1231231231/0001";
-
-             Filial filial = new Filial();
-             filial.idFilial = 1;
-             filial.cnpjFilial = "321231231/0001";
-
-             empresaCliente.listaFilial = new List<Filial>();
-             empresaCliente.listaFilial.Add(filial);
-             listaEmpresaCliente.Add(empresaCliente);
-
-             return View(listaEmpresaCliente);*/
-            Funcionario funcionario = new Funcionario();
-            funcionario.idPessoa = 1;
-            funcionario.nomePessoa = "Pessoa1";
-            funcionario.tipoContrato = "CLT";
-            funcionario.cargo = "cargo1";
-            funcionario.idFilial = 1;
-            funcionario.idDepartamento = 1;
-
+           /*
             List<Funcionario> listaFuncionario = new List<Funcionario>();
             listaFuncionario.Add(funcionario);
 
-            return View(listaFuncionario);
+            return View(listaFuncionario);*/
+           return View();
         }
 
         public ActionResult GerarPontoMensal(int? qtdHorasSem, int? qtdDiasTrab)

@@ -27,7 +27,7 @@ namespace FolhaPagamentoJoinha6.Controllers
             if (idEmpresa.HasValue)
             {
                 EmpresaCliente empresa = EmpresaCliente.GetEmpresa(idEmpresa);
-                Endereco endereco = Endereco.GetEndereco(empresa.idEndereco);
+                Endereco endereco = Endereco.GetEndereco(empresa.endereco);
 
                 if (empresa != null)
                 {

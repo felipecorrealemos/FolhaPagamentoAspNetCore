@@ -8,7 +8,7 @@ namespace FolhaPagamentoJoinha6.Models
         public static string server = "localhost";
         public static string user = "root";
         public static string password = "root";
-        public static string database = "db_joinha";
+        public static string database = "JoinhaBD";
 
         private string connectionString = $"Server={server};Database={database};User Id={user};Password={password};Trusted_Connection=True;Encrypt=False;";
         //private string connectionString = $"Server={server};Database={database};Trusted_Connection=True;";
