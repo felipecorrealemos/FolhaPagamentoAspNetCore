@@ -9,12 +9,40 @@ namespace FolhaPagamentoJoinha6.Controllers
         // GET: FuncionarioController
         public ActionResult Index()
         {
-           /*
-            List<Funcionario> listaFuncionario = new List<Funcionario>();
-            listaFuncionario.Add(funcionario);
+            try
+            {
+                List<Funcionario> listaFuncionario = Funcionario.GetListafuncionario();
+                ViewData["ListaFuncionario"] = listaFuncionario;
+            }
 
-            return View(listaFuncionario);*/
-           return View();
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
+            }
+
+            return View();
+        }
+
+        public ActionResult Salvar(IFormCollection collection)
+        {
+            try
+            {
+                if (Funcionario.CriaFuncionarioEEndereco(collection, out string? mensagemErro))
+                {
+                    TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
+                }
+
+                else
+                {
+                    TempData["ErrorMessage"] = $"Erro, {mensagemErro}.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         public ActionResult GerarPontoMensal(int? qtdHorasSem, int? qtdDiasTrab)

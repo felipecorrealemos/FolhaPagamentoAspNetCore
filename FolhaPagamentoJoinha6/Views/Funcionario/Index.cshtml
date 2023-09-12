@@ -1,7 +1,6 @@
-﻿@model IEnumerable<FolhaPagamentoJoinha6.Models.Funcionario>
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
+    var listaFuncionario = ViewData["ListaFuncionario"] as List<Funcionario>;
 }
 
 <h1>Funcionarios</h1>
@@ -18,53 +17,62 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.idPessoa)
+                ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.nomePessoa)
+                Primeiro nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.tipoContrato)
+                Ultimo nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.cargo)
+                data nascimento
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.idFilial)
+                telefone
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.idDepartamento)
+                email
+            </th>
+            <th>
+                pcd
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (listaFuncionario != null)
         {
-            <tr>
-                <td class="align-content-center">
-                    @Html.DisplayFor(modelItem => item.idPessoa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nomePessoa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tipoContrato)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.cargo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.idFilial)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.idDepartamento)
-                </td>
-                <td>
-                    <a class="btn btn-outline-secondary mr-2" href="@Url.Action("Details", new {  id=item.idPessoa  })">Details</a>
-                    <a class="btn btn-outline-success mr-2" href="@Url.Action("Edit", new {  id=item.idPessoa  })">Edit</a>
-                    <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
-                </td>
-            </tr>
+            @foreach (var func in listaFuncionario)
+            {
+                <tr>
+                    <td class="align-content-center">
+                        @func?.funcionarioId
+                    </td>
+                    <td>
+                        @func?.primeiroNome
+                    </td>
+                    <td>
+                        @func?.ultimoNome
+                    </td>
+                    <td>
+                        @func?.dataNasc
+                    </td>
+                    <td>
+                        @func?.telefone
+                    </td>
+                    <td>
+                        @func?.email
+                    </td>
+                    <td>
+                        @func?.pcd
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-secondary mr-2" href="@Url.Action("Details", new {  id=func.funcionarioId  })">Details</a>
+                        <a class="btn btn-outline-success mr-2" href="@Url.Action("Edit", new {  id=func.funcionarioId  })">Edit</a>
+                        <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
