@@ -10,14 +10,14 @@
 
 <partial name="_AlertsPartial">
     <form class="mb-3">
-        <input hidden name="idDepartamento" value="@departamento?.idDepartamento" />
+        <input hidden name="departamentoId" value="@departamento?.departamentoId" />
         <button type="submit" asp-action="Create" class="btn btn-primary">Criar novo Cargo</button>
     </form>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.idCargo)
+                    @Html.DisplayNameFor(model => model.cargoId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.cargoNome)
@@ -26,7 +26,7 @@
                     @Html.DisplayNameFor(model => model.salarioBase)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.idDepartamento)
+                    @Html.DisplayNameFor(model => model.departamentoId)
                 </th>
                 <th></th>
             </tr>
@@ -38,7 +38,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.idCargo)
+                            @Html.DisplayFor(modelItem => item.cargoId)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.cargoNome)
@@ -47,11 +47,11 @@
                             @Html.DisplayFor(modelItem => item.salarioBase)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.idDepartamento)
+                            @Html.DisplayFor(modelItem => item.departamentoId)
                         </td>
                         <td>
-                            <a class="btn btn-outline-secondary mr-2 disabled" href="@Url.Action("Details", new {  id=item.idCargo  })">Details</a>
-                            <a class="btn btn-outline-success mr-2 disabled" href="@Url.Action("Edit", new {  id=item.idCargo  })">Edit</a>
+                            <a class="btn btn-outline-secondary mr-2 disabled" href="@Url.Action("Details", new {  id=item.cargoId  })">Details</a>
+                            <a class="btn btn-outline-success mr-2 disabled" href="@Url.Action("Edit", new {  id=item.cargoId  })">Edit</a>
                             <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
                         </td>
                     </tr>

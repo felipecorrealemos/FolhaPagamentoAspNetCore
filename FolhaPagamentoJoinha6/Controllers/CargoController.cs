@@ -7,13 +7,13 @@ namespace FolhaPagamentoJoinha6.Controllers
     public class CargoController : Controller
     {
         // GET: CargoController
-        public ActionResult Index(int? idDepartamento)
+        public ActionResult Index(int? departamentoId)
         {
-            int? RetornoDep = TempData["idDepartamento"] as int?;
+            int? RetornoDep = TempData["departamentoId"] as int?;
 
             if (!RetornoDep.HasValue)
             {
-                RetornoDep = idDepartamento;
+                RetornoDep = departamentoId;
             }
 
             //Verificar o retorno do botao back to list da pagina create, esta retornando null.
@@ -42,11 +42,11 @@ namespace FolhaPagamentoJoinha6.Controllers
         }
 
         // GET: CargoController/Create
-        public ActionResult Create(int? idDepartamento)
+        public ActionResult Create(int? departamentoId)
         {
-            if (idDepartamento.HasValue)
+            if (departamentoId.HasValue)
             {
-                Departamento departamento = Departamento.GetDepartamento((int)idDepartamento);
+                Departamento departamento = Departamento.GetDepartamento((int)departamentoId);
 
                 if (departamento != null)
                 {
@@ -63,7 +63,7 @@ namespace FolhaPagamentoJoinha6.Controllers
                 if (Cargo.CriarCargo(collection, out string? mensagemErro))
                 {
                     TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
-                    TempData["idDepartamento"] = collection["idDepartamento"];
+                    TempData["departamentoId"] = collection["departamentoId"];
                 }
 
                 else
@@ -76,7 +76,7 @@ namespace FolhaPagamentoJoinha6.Controllers
                 TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
             }
 
-            return RedirectToAction(nameof(Index), new { idDepartamento = collection["idDepartamento"] });
+            return RedirectToAction(nameof(Index), new { departamentoId = collection["departamentoId"] });
         }
 
         // POST: CargoController/Create

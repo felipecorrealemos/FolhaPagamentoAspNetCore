@@ -76,6 +76,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9cUmVnaXN0cm9Qb250b0F1dG9tYXRpY28uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Funcionario/_CriarEnderecoPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9cX0NyaWFyRW5kZXJlY29QYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Funcionario/_CriarFuncionarioPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9cX0NyaWFyRnVuY2lvbmFyaW9QYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Felipe/Documents/GitHub/FolhaPagamentoAspNetCore/FolhaPagamentoJoinha6/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

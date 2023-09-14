@@ -7,17 +7,17 @@ namespace FolhaPagamentoJoinha6.Controllers
     public class FilialController : Controller
     {
         // GET: FilialController
-        public ActionResult Index(int? idEmpresa)
+        public ActionResult Index(int? empresaId)
         {
-            int? empresaMae = TempData["idEmpresa"] as int?;
+            /* int? empresaMae = TempData["empresaId"] as int?;
 
-            if (!empresaMae.HasValue)
-            {
-                empresaMae = idEmpresa;
-            }
+             if (!empresaMae.HasValue)
+             {
+                 empresaMae = empresaId;
+             }*/
 
-            List<EmpresaCliente> listaFilial = EmpresaCliente.GetFiliais((int)empresaMae);
-            EmpresaCliente empresa = EmpresaCliente.GetEmpresa(empresaMae);
+            List<EmpresaCliente> listaFilial = EmpresaCliente.GetFiliais((int)empresaId);
+            EmpresaCliente empresa = EmpresaCliente.GetEmpresa(empresaId);
 
             ViewData["empresaMae"] = empresa;
             ViewData["ListaFilial"] = listaFilial;
@@ -35,7 +35,9 @@ namespace FolhaPagamentoJoinha6.Controllers
         // GET: FilialController/Create
         public ActionResult Create(int? empresaMae)
         {
-            EmpresaCliente empresaCliente = EmpresaCliente.GetEmpresa(empresaMae);
+            //EmpresaCliente empresaCliente = EmpresaCliente.GetEmpresa(empresaMae);
+            EmpresaCliente empresaCliente = new EmpresaCliente();
+            empresaCliente.empresaMae = empresaMae.ToString();
 
             if (empresaCliente != null)
             {
@@ -52,7 +54,10 @@ namespace FolhaPagamentoJoinha6.Controllers
                 if (EmpresaCliente.CriarEmpresaEEndereco(collection, out string? mensagemErro))
                 {
                     TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
-                    TempData["idEmpresa"] = collection["idEmpresa"];
+                    int empresaId = Convert.ToInt32(collection["empresaMae"]);
+                    TempData["empresaId"] = empresaId;
+
+                    return RedirectToAction(nameof(Index), new { empresaId });
                 }
 
                 else
@@ -65,7 +70,7 @@ namespace FolhaPagamentoJoinha6.Controllers
                 TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
             }
 
-            return RedirectToAction(nameof(Index), new { idEmpresa = collection["idEmpresa"] });
+            return RedirectToAction("Index","Empresa");
         }
 
         // GET: FilialController/Edit/5

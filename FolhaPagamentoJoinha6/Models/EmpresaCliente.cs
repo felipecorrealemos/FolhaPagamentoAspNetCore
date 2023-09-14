@@ -91,7 +91,7 @@ namespace FolhaPagamentoJoinha6.Models
             }
 
             //cria empresa com o idEndereco
-            if (!CriarEmpresa(collection, idEndereco, objConexao, transaction, out int idEmpresaMae, out mensagemErro))
+            if (!CriarEmpresa(collection, idEndereco, objConexao, transaction, out int empresaId, out mensagemErro))
             {
                 objConexao.Rollback(transaction, objConexao.sqlConnection);
                 return false;
@@ -100,13 +100,22 @@ namespace FolhaPagamentoJoinha6.Models
             //verifica se possui o campo ehMatriz no formulario para criar a empresa matriz
             if (collection.TryGetValue("ehMatriz", out var ehMatrizValue))
             {
-                if (!AlteraIdEmpresaMae(idEmpresaMae, objConexao, transaction, out mensagemErro))
+                if (!AlteraEmpresa(empresaId.ToString(), empresaId, objConexao, transaction, out mensagemErro))
                 {
                     objConexao.Rollback(transaction, objConexao.sqlConnection);
                     return false;
                 }
             }
 
+            else
+            {
+                if (!AlteraEmpresa(collection["empresaMae"].ToString(), empresaId, objConexao, transaction, out mensagemErro))
+                {
+                    objConexao.Rollback(transaction, objConexao.sqlConnection);
+                    return false;
+                }
+            }
+            
             objConexao.Commit(transaction, objConexao.sqlConnection);
             mensagemErro = null;
             return true;
@@ -174,9 +183,9 @@ namespace FolhaPagamentoJoinha6.Models
             }
         }
 
-        private static bool AlteraIdEmpresaMae(int idEmpresaMae, Conexao objConexao, SqlTransaction sqlTransaction, out string? mensagemErro)
+        private static bool AlteraEmpresa(string? empresaMae, int empresaId, Conexao objConexao, SqlTransaction sqlTransaction, out string? mensagemErro)
         {
-            string sql = $"UPDATE empresa_clientes SET empresaMae = {idEmpresaMae} WHERE empresaId = {idEmpresaMae}";
+            string sql = $"UPDATE empresa_clientes SET empresaMae = '{empresaMae}' WHERE empresaId = {empresaId};";
 
             SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection, sqlTransaction);
 
@@ -235,7 +244,7 @@ namespace FolhaPagamentoJoinha6.Models
             }
         }
 
-        public static EmpresaCliente CarregaObjeto(IFormCollection collection)
+        private static EmpresaCliente CarregaObjeto(IFormCollection collection)
         {
             EmpresaCliente empresaCliente = new EmpresaCliente()
             {
@@ -269,7 +278,7 @@ namespace FolhaPagamentoJoinha6.Models
             return empresaCliente;
         }
 
-        public static EmpresaCliente CarregaObjeto(DataRow dataRow)
+        private static EmpresaCliente CarregaObjeto(DataRow dataRow)
         {
             EmpresaCliente empresaCliente = new EmpresaCliente()
             {
@@ -280,7 +289,7 @@ namespace FolhaPagamentoJoinha6.Models
                 apelido = dataRow["apelido"]?.ToString(),
                 empresaMae = dataRow["empresaMae"]?.ToString(),
                 ehMatriz = Convert.ToBoolean(dataRow["ehMatriz"]),
-                endereco = Convert.ToInt32(dataRow["empresaId"]),
+                endereco = Convert.ToInt32(dataRow["endereco"]),
                 telefone = dataRow["telefone"].ToString(),
                 email = dataRow["email"].ToString(),
                 observacao = dataRow["observacao"].ToString()

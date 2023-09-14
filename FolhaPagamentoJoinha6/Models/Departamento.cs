@@ -9,9 +9,9 @@ namespace FolhaPagamentoJoinha6.Models
 {
     public class Departamento
     {
-        public int? idDepartamento { get; set; }
+        public int? departamentoId { get; set; }
         public string? departamentoNome { get; set; }
-        public int? idEmpresa { get; set; }
+        public int? empresaId { get; set; }
         public int? totalCargo { get; set; }
 
         public static bool CriarDepartamento(IFormCollection collection, out string? mensagemErro)
@@ -19,15 +19,15 @@ namespace FolhaPagamentoJoinha6.Models
             Departamento departamento = CarregaObjeto(collection);
             Conexao objConexao = new Conexao();
 
-            string sql = $"INSERT INTO tb_departamento (departamentoNome, idEmpresa) " +
-                $"VALUES (@departamentoNome, @idEmpresa);";
+            string sql = $"INSERT INTO departamentos (departamentoNome, empresaId) " +
+                $"VALUES (@departamentoNome, @empresaId);";
 
             try
             {
                 using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection))
                 {
                     command.Parameters.AddWithValue("@departamentoNome", departamento.departamentoNome?.Trim());
-                    command.Parameters.AddWithValue("@idEmpresa", departamento.idEmpresa);
+                    command.Parameters.AddWithValue("@empresaId", departamento.empresaId);
                     objConexao.ExecutarComandoSql(command, false);
                 }
 
@@ -42,14 +42,14 @@ namespace FolhaPagamentoJoinha6.Models
             }
         }
 
-        public static List<Departamento> GetListaDepartamento(int idEmpresa)
+        public static List<Departamento> GetListaDepartamento(int empresaId)
         {
             Conexao objConexao = new Conexao();
             List<Departamento> listaDepartamento = new List<Departamento>();
 
-            string sql = $"SELECT d.*,(SELECT COUNT(*) FROM tb_cargo c " +
-                $"WHERE c.idDepartamento = d.idDepartamento) AS TotalCargos " +
-                $"FROM tb_departamento d WHERE d.idEmpresa = {idEmpresa};";
+            string sql = $"SELECT d.*,(SELECT COUNT(*) FROM cargos c " +
+                $"WHERE c.departamentoId = d.departamentoId) AS TotalCargos " +
+                $"FROM departamentos d WHERE d.empresaId = {empresaId};";
             DataTable dt = objConexao.RetornaDataTable(sql);
 
             foreach (DataRow row in dt.Rows)
@@ -61,11 +61,11 @@ namespace FolhaPagamentoJoinha6.Models
             return listaDepartamento;
         }
 
-        public static Departamento GetDepartamento(int idDepartamento)
+        public static Departamento GetDepartamento(int departamentoId)
         {
             Conexao objConexao = new Conexao();
 
-            string sql = $"SELECT * FROM tb_departamento WHERE idDepartamento = {idDepartamento}";
+            string sql = $"SELECT * FROM departamentos WHERE departamentoId = {departamentoId}";
             DataTable dt = objConexao.RetornaDataTable(sql);
             Departamento departamento = new Departamento();
 
@@ -81,9 +81,9 @@ namespace FolhaPagamentoJoinha6.Models
         {
             Departamento departamento = new Departamento()
             {
-                idDepartamento = !string.IsNullOrEmpty(collection["idDepartamento"]) ? Convert.ToInt32(collection["idDepartamento"]) : 0,
+                departamentoId = !string.IsNullOrEmpty(collection["departamentoId"]) ? Convert.ToInt32(collection["departamentoId"]) : 0,
                 departamentoNome = collection["departamentoNome"].ToString(),
-                idEmpresa = Convert.ToInt32(collection["idEmpresa"])
+                empresaId = Convert.ToInt32(collection["empresaId"])
             };
 
             return departamento;
@@ -93,9 +93,9 @@ namespace FolhaPagamentoJoinha6.Models
         {
             Departamento departamento = new Departamento()
             {
-                idDepartamento = Convert.ToInt32(dataRow["idDepartamento"]),
+                departamentoId = Convert.ToInt32(dataRow["departamentoId"]),
                 departamentoNome = dataRow["departamentoNome"].ToString(),
-                idEmpresa = Convert.ToInt32(dataRow["idEmpresa"]),
+                empresaId = Convert.ToInt32(dataRow["empresaId"]),
                 //totalCargo = Convert.ToInt32(dataRow["TotalCargos"])
             };
 

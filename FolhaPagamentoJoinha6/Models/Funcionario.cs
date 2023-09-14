@@ -1,10 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Linq;
-using System.Web;
 
 namespace FolhaPagamentoJoinha6.Models
 {
@@ -27,7 +23,7 @@ namespace FolhaPagamentoJoinha6.Models
         public string cpf { get; set; }
 
         [Required(ErrorMessage = mensagemValidacao)]
-        public DateTime dataNasc { get; set; }
+        public DateTime? dataNasc { get; set; }
 
         public int endereco { get; set; }
 
@@ -41,13 +37,11 @@ namespace FolhaPagamentoJoinha6.Models
         public string escolaridade { get; set; }
 
         [Required(ErrorMessage = mensagemValidacao)]
-        public DateTime dataAdmissao { get; set; }
+        public DateTime? dataAdmissao { get; set; }
 
-        public DateTime dataDemissao { get; set; }
+        public DateTime? dataDemissao { get; set; }
 
         public int cargoId { get; set; }
-
-        public float promocoes { get; set; }
 
         /*public bool optanteVT { get; set; }
         public int idFilial { get; set; }
@@ -92,9 +86,9 @@ namespace FolhaPagamentoJoinha6.Models
             funcionario.endereco = enderecoId;
 
             string sql = $"INSERT INTO funcionarios (primeiroNome, ultimoNome, nomeSocial, rg, cpf, dataNasc, " +
-                $"telefone, email, pcd, etnia, certificacoes, escolaridade, dataAdmissao, dataDemissao, cargoId) " +
+                $"telefone, email, pcd, etnia, certificacoes, escolaridade, dataAdmissao, endereco) " +
                 $"VALUES (@primeiroNome, @ultimoNome, @nomeSocial, @rg, @cpf, @dataNasc, " +
-                $"@telefone, @email, @pcd, @etnia, @certificacoes, @escolaridade, @dataAdmissao, @dataDemissao, @cargoId);";
+                $"@telefone, @email, @pcd, @etnia, @certificacoes, @escolaridade, @dataAdmissao, @endereco);";
 
             try
             {
@@ -108,14 +102,14 @@ namespace FolhaPagamentoJoinha6.Models
                     command.Parameters.AddWithValue("@dataNasc", funcionario.dataNasc);
                     command.Parameters.AddWithValue("@telefone", funcionario.telefone);
                     command.Parameters.AddWithValue("@email", funcionario.email);
-                    command.Parameters.AddWithValue("@pcd", funcionario.pcd);
-                    command.Parameters.AddWithValue("@email", funcionario.email);
+                    command.Parameters.AddWithValue("@pcd", SqlDbType.Bit).Value = funcionario.pcd;
                     command.Parameters.AddWithValue("@etnia", funcionario.etnia);
                     command.Parameters.AddWithValue("@certificacoes", funcionario.certificacoes);
                     command.Parameters.AddWithValue("@escolaridade", funcionario.escolaridade);
                     command.Parameters.AddWithValue("@dataAdmissao", funcionario.dataAdmissao);
-                    command.Parameters.AddWithValue("@dataDemissao", funcionario.dataDemissao);
-                    command.Parameters.AddWithValue("@cargoId", funcionario.cargoId);
+                    command.Parameters.AddWithValue("@endereco", funcionario.endereco);
+                    //command.Parameters.AddWithValue("@dataDemissao", funcionario.dataDemissao);
+                    //command.Parameters.AddWithValue("@cargoId", funcionario.cargoId);
 
                     objConexao.ExecutarComandoSql(command, true);
                 }
@@ -136,7 +130,7 @@ namespace FolhaPagamentoJoinha6.Models
             Conexao objConexao = new Conexao();
             List<Funcionario> listaFuncionario = new List<Funcionario>();
 
-            string sql = "SELECT * FROM funcionarios ORDER BY empresaId ASC";
+            string sql = "SELECT * FROM funcionarios ORDER BY funcionarioId ASC";
             DataTable dt = objConexao.RetornaDataTable(sql);
 
             foreach (DataRow row in dt.Rows)
@@ -211,29 +205,23 @@ namespace FolhaPagamentoJoinha6.Models
                 nomeSocial = collection["nomeSocial"].ToString(),
                 rg = collection["rg"].ToString(),
                 cpf = collection["cpf"].ToString(),
-                dataNasc = DateTime.Parse(collection["dataNasc"].ToString()),
                 endereco = Convert.ToInt32(collection["endereco"]),
                 telefone = collection["telefone"].ToString(),
                 email = collection["email"].ToString(),
                 etnia = collection["etnia"].ToString(),
                 certificacoes = collection["certificacoes"].ToString(),
                 escolaridade = collection["escolaridade"].ToString(),
-                dataAdmissao = DateTime.Parse(collection["dataAdmissao"]),
-                dataDemissao = DateTime.Parse(collection["dataDemissao"].ToString()),
                 cargoId = Convert.ToInt32(collection["cargoId"]),
-                promocoes = float.Parse(collection["promocoes"])
-
+                // promocoes = float.Parse(collection["promocoes"])
             };
 
-            if (collection.TryGetValue("pcd", out var pcdValue))
+            funcionario.dataNasc = ConverteData(collection["dataNasc"].ToString());
+            funcionario.dataAdmissao = ConverteData(collection["dataAdmissao"].ToString());
+            funcionario.dataDemissao = ConverteData(collection["dataDemissao"].ToString());
+
+            if (collection["pcd"].Count > 1)
             {
-                if (bool.TryParse(pcdValue, out var valorBool))
-                {
-                    if (valorBool)
-                    {
-                        funcionario.pcd = true;
-                    }
-                }
+                funcionario.pcd = true;
             }
 
             return funcionario;
@@ -243,33 +231,85 @@ namespace FolhaPagamentoJoinha6.Models
         {
             Funcionario funcionario = new Funcionario()
             {
+                funcionarioId = Convert.ToInt32(dataRow["funcionarioId"]),
                 primeiroNome = dataRow["primeiroNome"]?.ToString(),
                 ultimoNome = dataRow["ultimoNome"]?.ToString(),
                 nomeSocial = dataRow["nomeSocial"]?.ToString(),
                 rg = dataRow["rg"]?.ToString(),
                 cpf = dataRow["cpf"]?.ToString(),
-                dataNasc = DateTime.Parse(dataRow["dataNasc"]?.ToString()),
                 endereco = Convert.ToInt32(dataRow["endereco"]),
                 telefone = dataRow["telefone"]?.ToString(),
                 email = dataRow["email"]?.ToString(),
                 etnia = dataRow["etnia"]?.ToString(),
                 certificacoes = dataRow["certificacoes"]?.ToString(),
                 escolaridade = dataRow["escolaridade"]?.ToString(),
-                dataAdmissao = Convert.ToDateTime(dataRow["dataAdmissao"]),
-                dataDemissao = Convert.ToDateTime(dataRow["dataDemissao"]),
-                cargoId = Convert.ToInt32(dataRow["cargoId"]),
+                //cargoId = Convert.ToInt32(dataRow["cargoId"]),
             };
 
-            if (dataRow["promocoes"] != DBNull.Value)
+            funcionario.dataNasc = ConverteData(dataRow, "dataNasc");
+            funcionario.dataAdmissao = ConverteData(dataRow, "dataAdmissao");
+            funcionario.dataDemissao = ConverteData(dataRow, "dataDemissao");
+
+           /* if (dataRow["dataNasc"] != DBNull.Value)
             {
-                funcionario.promocoes = Convert.ToSingle(dataRow["promocoes"]);
+                funcionario.dataNasc = Convert.ToDateTime(dataRow["dataNasc"]);
+            }
+
+            if (dataRow["dataAdmissao"] != DBNull.Value)
+            {
+                funcionario.dataAdmissao = Convert.ToDateTime(dataRow["dataAdmissao"]);
+            }
+
+            if (dataRow["dataDemissao"] != DBNull.Value)
+            {
+                funcionario.dataDemissao = Convert.ToDateTime(dataRow["dataDemissao"]);
+            }*/
+
+            if (dataRow["pcd"] != DBNull.Value)
+            {
+                funcionario.pcd = Convert.ToBoolean(dataRow["pcd"]);
             }
 
             return funcionario;
         }
 
+        private static DateTime? ConverteData(string data)
+        {
+            if (!string.IsNullOrEmpty(data) && DateTime.TryParse(data, out DateTime dataNascimeto))
+            {
+                return dataNascimeto;
+            }
 
-        public static List<AtestadoMedico> GetAtestadosMedicos(int idFuncionario)
+            return null;
+        }
+
+        private static DateTime? ConverteData(DataRow dataRow, string nomeCampo)
+        {
+            if (dataRow[nomeCampo] != DBNull.Value)
+            {
+                return Convert.ToDateTime(dataRow[nomeCampo]);
+            }
+
+            return null;
+        }
+
+        private static bool ConverteBool(IFormCollection collection, string nomeCampo)
+        {
+            if (collection.TryGetValue(nomeCampo, out var pcdValue))
+            {
+                if (bool.TryParse(pcdValue, out var valorBool))
+                {
+                    if (valorBool)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+       /* public static List<AtestadoMedico> GetAtestadosMedicos(int idFuncionario)
         {
             Funcionario funcionario = new Funcionario();
             funcionario.listaAtestadoMedico = new List<AtestadoMedico>();//ClasseConexaoGET(ComandoSQL GetAtestadoMedico_idFuncionario);
@@ -350,6 +390,6 @@ namespace FolhaPagamentoJoinha6.Models
         public void PensaoDevida(bool value, int dependentes, float valor)
         {
 
-        }
+        }*/
     }
 }

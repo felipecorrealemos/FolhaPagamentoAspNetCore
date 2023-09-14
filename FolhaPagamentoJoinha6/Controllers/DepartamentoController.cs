@@ -7,13 +7,13 @@ namespace FolhaPagamentoJoinha6.Controllers
     public class DepartamentoController : Controller
     {
         // GET: DepartamentoController
-        public ActionResult Index(int? idEmpresa)
+        public ActionResult Index(int? empresaId)
         {
-            int? empresaMae = TempData["idEmpresa"] as int?;
+            int? empresaMae = TempData["empresaId"] as int?;
 
             if (!empresaMae.HasValue)
             {
-                empresaMae = idEmpresa;
+                empresaMae = empresaId;
             }
 
             try
@@ -40,11 +40,11 @@ namespace FolhaPagamentoJoinha6.Controllers
         }
 
         // GET: DepartamentoController/Create
-        public ActionResult Create(int? idEmpresa)
+        public ActionResult Create(int? empresaId)
         {
-            if (idEmpresa.HasValue)
+            if (empresaId.HasValue)
             {
-                EmpresaCliente empresa = EmpresaCliente.GetEmpresa(idEmpresa);
+                EmpresaCliente empresa = EmpresaCliente.GetEmpresa(empresaId);
 
                 if (empresa != null)
                 {
@@ -61,7 +61,7 @@ namespace FolhaPagamentoJoinha6.Controllers
                 if (Departamento.CriarDepartamento(collection, out string? mensagemErro))
                 {
                     TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
-                    TempData["idEmpresa"] = collection["idEmpresa"];
+                    TempData["empresaId"] = collection["empresaId"];
                 }
 
                 else
@@ -74,7 +74,7 @@ namespace FolhaPagamentoJoinha6.Controllers
                 TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
             }
 
-            return RedirectToAction(nameof(Index), new { idEmpresa = collection["idEmpresa"] });
+            return RedirectToAction(nameof(Index), new { empresaId = collection["empresaId"] });
         }
 
         // POST: DepartamentoController/Create
@@ -134,12 +134,12 @@ namespace FolhaPagamentoJoinha6.Controllers
             }
         }
 
-        public IActionResult VerCargo(int idDepartamento)
+        public IActionResult VerCargo(int departamentoId)
         {
             try
             {
                 //TempData["idDepartamento"] = idDepartamento;
-                return RedirectToAction("Index", "Cargo", new { idDepartamento });
+                return RedirectToAction("Index", "Cargo", new { departamentoId });
             }
 
             catch (Exception ex)

@@ -1,6 +1,4 @@
-﻿
-
-<h1>Create</h1>
+﻿<h1>Create</h1>
 <h4>Empresa</h4>
 <hr />
 
@@ -9,6 +7,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <partial name="_CriarEmpresaPartial" model="new EmpresaCliente()" />
+        <h4>Endereço</h4>
         <partial name="_CriarEnderecoPartial" model="new Endereco()" />
 
         <div class="form-group mt-5 mb-5">

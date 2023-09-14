@@ -6,18 +6,18 @@ namespace FolhaPagamentoJoinha6.Models
 {
     public class Cargo
     {
-        public int? idCargo { get; set; }
+        public int? cargoId { get; set; }
         public string? cargoNome { get; set; }
         public float salarioBase { get; set; }
-        public int idDepartamento { get; set; }
+        public int departamentoId { get; set; }
 
         public static bool CriarCargo(IFormCollection collection, out string? mensagemErro)
         {
             Cargo cargo = CarregaObjeto(collection);
             Conexao objConexao = new Conexao();
 
-            string sql = $"INSERT INTO tb_cargo (cargoNome, salarioBase,idDepartamento ) " +
-                $"VALUES (@cargoNome, @salarioBase, @idDepartamento);";
+            string sql = $"INSERT INTO cargos (cargoNome, salarioBase,departamentoId ) " +
+                $"VALUES (@cargoNome, @salarioBase, @departamentoId);";
 
             try
             {
@@ -25,7 +25,7 @@ namespace FolhaPagamentoJoinha6.Models
                 {
                     command.Parameters.AddWithValue("@cargoNome", cargo.cargoNome?.Trim());
                     command.Parameters.AddWithValue("@salarioBase", cargo.salarioBase);
-                    command.Parameters.AddWithValue("@idDepartamento", cargo.idDepartamento);
+                    command.Parameters.AddWithValue("@departamentoId", cargo.departamentoId);
                     objConexao.ExecutarComandoSql(command, false);
                 }
 
@@ -40,12 +40,12 @@ namespace FolhaPagamentoJoinha6.Models
             }
         }
 
-        public static List<Cargo> GetListaCargo(int idDepartamento)
+        public static List<Cargo> GetListaCargo(int departamentoId)
         {
             Conexao objConexao = new Conexao();
             List<Cargo> listaCargo = new List<Cargo>();
 
-            string sql = $"SELECT * FROM tb_cargo WHERE idDepartamento = {idDepartamento}";
+            string sql = $"SELECT * FROM cargos WHERE departamentoId = {departamentoId}";
             DataTable dt = objConexao.RetornaDataTable(sql);
 
             foreach (DataRow row in dt.Rows)
@@ -61,10 +61,10 @@ namespace FolhaPagamentoJoinha6.Models
         {
             Cargo cargo = new Cargo()
             {
-                idCargo = !string.IsNullOrEmpty(collection["idCargo"]) ? Convert.ToInt32(collection["idCargo"]) : null,
+                cargoId = !string.IsNullOrEmpty(collection["cargoId"]) ? Convert.ToInt32(collection["cargoId"]) : null,
                 cargoNome = collection["cargoNome"].ToString(),
                 salarioBase = Convert.ToInt32(collection["salarioBase"]),
-                idDepartamento = Convert.ToInt32(collection["idDepartamento"])
+                departamentoId = Convert.ToInt32(collection["departamentoId"])
             };
 
             return cargo;
@@ -74,10 +74,10 @@ namespace FolhaPagamentoJoinha6.Models
         {
             Cargo cargo = new Cargo()
             {
-                idCargo = !dataRow.IsNull("idCargo") ? Convert.ToInt32(dataRow["idCargo"]) : null,
+                cargoId = !dataRow.IsNull("cargoId") ? Convert.ToInt32(dataRow["cargoId"]) : null,
                 cargoNome = dataRow["cargoNome"]?.ToString() ?? "",
                 salarioBase = Convert.ToInt32(dataRow["salarioBase"]),
-                idDepartamento = Convert.ToInt32(dataRow["idDepartamento"])
+                departamentoId = Convert.ToInt32(dataRow["departamentoId"])
             };
 
             return cargo;

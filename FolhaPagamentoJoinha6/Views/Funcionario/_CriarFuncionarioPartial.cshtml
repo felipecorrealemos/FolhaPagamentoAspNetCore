@@ -1,0 +1,102 @@
+﻿@model FolhaPagamentoJoinha6.Models.Funcionario
+
+@{
+    ViewData["Title"] = "Create";
+    var funcionario = ViewData["Funcionario"] as Funcionario;
+}
+
+<div hidden class="form-group">
+    <label asp-for="funcionarioId" class="control-label"></label>
+    <input asp-for="funcionarioId" class="form-control" />
+    <span asp-validation-for="funcionarioId" class="text-danger"></span>
+</div>
+<div class="row mb-3">
+    <div class="form-group  col-md-5">
+        <label asp-for="primeiroNome" class="control-label"></label>
+        <input asp-for="primeiroNome" maxlength="32" class="form-control" />
+        <span asp-validation-for="primeiroNome" class="text-danger"></span>
+    </div>
+    <div class="form-group  col-md-5">
+        <label asp-for="ultimoNome" class="control-label"></label>
+        <input asp-for="ultimoNome" maxlength="64" class="form-control" />
+        <span asp-validation-for="ultimoNome" class="text-danger"></span>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="form-group col-md-5">
+        <label asp-for="nomeSocial" class="control-label"></label>
+        <input asp-for="nomeSocial" maxlength="128" class="form-control" />
+        <span asp-validation-for="nomeSocial" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <label asp-for="rg" class="control-label"></label>
+        <input asp-for="rg" maxlength="9" class="form-control" />
+        <span asp-validation-for="rg" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <label asp-for="cpf" class="control-label"></label>
+        <input asp-for="cpf" maxlength="11" class="form-control" />
+        <span asp-validation-for="cpf" class="text-danger"></span>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="form-group  col-md-3">
+        <label asp-for="dataNasc" class="control-label"></label>
+        <input asp-for="dataNasc" value="@DateTime.Now" type="date" class="form-control" />
+        <span asp-validation-for="dataNasc" class="text-danger"></span>
+    </div>
+    <div class="form-group  col-md-3">
+        <label asp-for="telefone" class="control-label"></label>
+        <input asp-for="telefone" maxlength="14" class="form-control" />
+        <span asp-validation-for="telefone" class="text-danger"></span>
+    </div>
+    <div class="form-group  col-md-3">
+        <label asp-for="email" class="control-label"></label>
+        <input asp-for="email" maxlength="128" class="form-control" />
+        <span asp-validation-for="email" class="text-danger"></span>
+    </div>
+
+</div>
+<div class="form-group form-check col-md-2 mb-3">
+    <label class="form-check-label">PCD
+        <input class="form-check-input" name="pcd" type="checkbox" asp-for="pcd" />
+    </label>
+</div>
+
+<div class="row mb-3">
+
+    <div class="form-group  col-md-3">
+        <label asp-for="escolaridade" class="control-label"></label>
+        <input asp-for="escolaridade" maxlength="64" class="form-control" />
+        <span asp-validation-for="escolaridade" class="text-danger"></span>
+    </div>
+    <div class="form-group  col-md-3">
+        <label asp-for="certificacoes" class="control-label"></label>
+        <input asp-for="certificacoes" maxlength="255" class="form-control" />
+        <span asp-validation-for="certificacoes" class="text-danger"></span>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="form-group col-md-3">
+        <label asp-for="dataAdmissao" class="control-label"></label>
+        <input asp-for="dataAdmissao" value="@DateTime.Now" type="date" class="form-control" />
+        <span asp-validation-for="dataAdmissao" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-3">
+        <label asp-for="dataDemissao" class="control-label"></label>
+        <input asp-for="dataDemissao" value="@DateTime.Now" type="date" disabled class="form-control" />
+        <span asp-validation-for="dataDemissao" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-group col-md-3 mb-3">
+    <label asp-for="cargoId" class="control-label"></label>
+    <input asp-for="cargoId" class="form-control" />
+    <span asp-validation-for="cargoId" class="text-danger"></span>
+</div>
+<div class="row mb-3">
+    <div class="form-group col-md-3">
+        <label asp-for="etnia" class="control-label"></label>
+        <input asp-for="etnia" maxlength="36" class="form-control" />
+        <span asp-validation-for="etnia" class="text-danger"></span>
+    </div>
+</div>

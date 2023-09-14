@@ -11,7 +11,7 @@
 <partial name="_AlertsPartial">
 
     <form>
-        <input type="hidden" asp-for="empresaMae" value="@empresaMae?.empresaMae" />
+        <input type="hidden" asp-for="empresaMae" value="@empresaMae?.empresaId" />
         <button type="submit" asp-action="Create" class="btn btn-primary">Criar nova filial</button>
     </form>
     <table class="table">

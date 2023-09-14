@@ -22,11 +22,11 @@ namespace FolhaPagamentoJoinha6.Controllers
         }
 
         // GET: EmpresaController/Create
-        public ActionResult Create(int? idEmpresa)
+        public ActionResult Create(int? empresaId)
         {
-            if (idEmpresa.HasValue)
+            if (empresaId.HasValue)
             {
-                EmpresaCliente empresa = EmpresaCliente.GetEmpresa(idEmpresa);
+                EmpresaCliente empresa = EmpresaCliente.GetEmpresa(empresaId);
                 Endereco endereco = Endereco.GetEndereco(empresa.endereco);
 
                 if (empresa != null)
@@ -85,12 +85,12 @@ namespace FolhaPagamentoJoinha6.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult VerFilial(int idEmpresa)
+        public IActionResult VerFilial(int empresaId)
         {
             try
             {
-                TempData["idEmpresa"] = idEmpresa;
-                return RedirectToAction("Index", "Filial");
+                //TempData["empresaId"] = empresaId;
+                return RedirectToAction("Index", "Filial", new { empresaId });
             }
 
             catch (Exception ex)
@@ -101,12 +101,12 @@ namespace FolhaPagamentoJoinha6.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult VerDepartamento(int idEmpresa)
+        public IActionResult VerDepartamento(int empresaId)
         {
             try
             {
                 //TempData["idEmpresa"] = idEmpresa;
-                return RedirectToAction("Index", "Departamento", new { idEmpresa });
+                return RedirectToAction("Index", "Departamento", new { empresaId });
             }
 
             catch (Exception ex)

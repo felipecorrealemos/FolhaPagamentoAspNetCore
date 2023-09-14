@@ -2,65 +2,66 @@
 
 @{
     ViewData["Title"] = "Create";
-    var empresaMae = ViewData["empresaMae"] as EmpresaCliente;
+    var empresa = ViewData["empresaMae"] as EmpresaCliente;
 }
 
 <div hidden class="form-group">
     <label asp-for="empresaId" class="control-label"></label>
-    <input asp-for="empresaId" class="form-control" value="@((empresaMae?.empresaId))" />
+    <input asp-for="empresaId" class="form-control" value="@((empresa?.empresaId))" />
 </div>
 
 <div hidden class="form-group">
     <label asp-for="empresaMae" class="control-label"></label>
-    <input asp-for="empresaMae" class="form-control" value="@((empresaMae?.empresaMae))" />
-</div>
-<div class="row mb-3">
-    <div class="form-group col-md-6 col-12">
-        <label class="control-label">Razão Social empresa mãe</label>
-        <input class="form-control" value="@((empresaMae?.razaoSocial) ?? "")" disabled />
-    </div>
-
-    <div class="form-group col-md-6 col-12">
-        <label class="control-label">CNPJ empresa Mãe</label>
-        <input class="form-control" value="@((empresaMae?.cnpj) ?? "")" disabled />
-    </div>
+    <input asp-for="empresaMae" class="form-control" value="@((empresa?.empresaMae))" />
 </div>
 
 <div class="row mb-3">
     <div class="form-group col-md-6 col-12">
         <label asp-for="razaoSocial" class="control-label"></label>
-        <input asp-for="razaoSocial" class="form-control" />
+        <input asp-for="razaoSocial" maxlength="64" placeholder="ex: Botica Comercial Farmaceutica LTDA – O Boticário" class="form-control" value="@((empresa?.razaoSocial) ?? "")" />
+        <span asp-validation-for="razaoSocial" class="text-danger"></span>
     </div>
 
     <div class="form-group col-md-6 col-12">
         <label asp-for="cnpj" class="control-label"></label>
-        <input asp-for="cnpj" class="form-control" />
+        <input asp-for="cnpj" maxlength="14" class="form-control" value="@((empresa?.cnpj) ?? "")" />
+        <span asp-validation-for="cnpj" class="text-danger"></span>
     </div>
 </div>
 
 <div class="row mb-3">
     <div class="form-group col-md-6 col-12">
         <label asp-for="nomeFantasia" class="control-label"></label>
-        <input asp-for="nomeFantasia" class="form-control" />
-        <span asp-validation-for="nomeFantasia" class="text-danger"></span>
+        <input asp-for="nomeFantasia" maxlength="128" class="form-control" value="@((empresa?.nomeFantasia) ?? "")" />
     </div>
 
     <div class="form-group col-md-6 col-12">
         <label asp-for="apelido" class="control-label"></label>
-        <input asp-for="apelido" class="form-control" />
-        <span asp-validation-for="apelido" class="text-danger"></span>
+        <input asp-for="apelido" maxlength="64" class="form-control" value="@((empresa?.apelido) ?? "")" />
     </div>
 </div>
 
-<div class="form-group col-md-6 col-12 mb-3">
-    <label asp-for="email" class="control-label"></label>
-    <input asp-for="email" class="form-control" />
-    <span asp-validation-for="email" class="text-danger"></span>
+<div class="row mb-3">
+    <div class="form-group col-md-6 col-12">
+        <label asp-for="telefone" class="control-label"></label>
+        <input asp-for="telefone" maxlength="14" class="form-control" value="@((empresa?.telefone) ?? "")" />
+
+    </div>
+
+    <div class="form-group col-md-6 col-12">
+        <label asp-for="email" class="control-label"></label>
+        <input asp-for="email" maxlength="128" class="form-control" value="@((empresa?.email) ?? "")" />
+    </div>
 </div>
 
-<div class="form-group col-12 mb-3">
+<div class="form-group row mb-3">
+    <label class="control-label col-2">ehMatriz?</label>
+    <input name="ehMatriz" type="checkbox"  value="false" hidden />
+    <input class="form-check-input form-group col-1" disabled type="checkbox"  />
+</div>
+
+<div class="form-group row col-12 mb-3">
     <label asp-for="observacao" class="control-label"></label>
-    <textarea asp-for="observacao" class="form-control"></textarea>
-    <span asp-validation-for="observacao" class="text-danger"></span>
+    <textarea name="observacao" rows="3" maxlength="255" class="form-control">@((empresa?.observacao) ?? "")</textarea>
 </div>
 

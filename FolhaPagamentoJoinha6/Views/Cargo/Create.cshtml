@@ -16,15 +16,15 @@
         <form asp-action="Salvar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div hidden class="form-group">
-                <label asp-for="idDepartamento" class="control-label"></label>
-                <input asp-for="idDepartamento" class="form-control" value="@((departamento?.idDepartamento))" />
-                <span asp-validation-for="idDepartamento" class="text-danger"></span>
+                <label asp-for="departamentoId" class="control-label"></label>
+                <input asp-for="departamentoId" class="form-control" value="@((departamento?.departamentoId))" />
+                <span asp-validation-for="departamentoId" class="text-danger"></span>
             </div>
 
             <div hidden class="form-group col-md-6 mb-3">
                 <label class="control-label"></label>
-                <input asp-for="idCargo" class="form-control" value="@((cargo?.cargoNome) ?? "")" />
-                <span asp-validation-for="idCargo" class="text-danger"></span>
+                <input asp-for="cargoId" class="form-control" value="@((cargo?.cargoNome) ?? "")" />
+                <span asp-validation-for="cargoId" class="text-danger"></span>
             </div>
 
             <div class="form-group col-md-6 mb-3">
@@ -39,7 +39,7 @@
             </div>
 
             <div class="form-group mt-5 mb-5">
-                <a class="btn btn-secondary" asp-controller="Cargo" asp-action="Index" asp-route-idDepartamento="@departamento?.idDepartamento">Back to List</a>
+                <a class="btn btn-secondary" asp-controller="Cargo" asp-action="Index" asp-route-departamentoId="@departamento?.departamentoId">Back to List</a>
                 <input type="submit" class="btn btn-success" />
             </div>
 

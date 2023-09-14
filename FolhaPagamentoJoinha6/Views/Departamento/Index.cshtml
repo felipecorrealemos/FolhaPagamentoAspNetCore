@@ -10,20 +10,20 @@
 
 <partial name="_AlertsPartial">
     <form class="mb-3">
-        <input hidden name="idEmpresa" value="@empresaMae?.empresaMae" />
+        <input hidden name="empresaId" value="@empresaMae?.empresaMae" />
         <button type="submit" asp-action="Create" class="btn btn-primary">Criar novo Departamento</button>
     </form>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.idDepartamento)
+                    @Html.DisplayNameFor(model => model.departamentoId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.departamentoNome)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.idEmpresa)
+                    @Html.DisplayNameFor(model => model.empresaId)
                 </th>
                 <th style="text-align:center">
                     @Html.DisplayNameFor(model => model.totalCargo)
@@ -38,21 +38,21 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.idDepartamento)
+                            @Html.DisplayFor(modelItem => item.departamentoId)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.departamentoNome)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.idEmpresa)
+                            @Html.DisplayFor(modelItem => item.empresaId)
                         </td>
                         <td style="text-align:center">
                             @Html.DisplayFor(modelItem => item.totalCargo)
                         </td>
                         <td>
                             <a class="btn btn-outline-secondary mr-2 disabled" href="@Url.Action("Details", new {  })">Details</a>
-                            <a class="btn btn-outline-success mr-2 disabled" href="@Url.Action("Edit", new {  id=item.idDepartamento  })">Edit</a>
-                            <a class="btn btn-outline-success mr-2" href="@Url.Action("verCargo", new {  idDepartamento=item.idDepartamento  })">Ver Cargos</a>
+                            <a class="btn btn-outline-success mr-2 disabled" href="@Url.Action("Edit", new {  departamentoId=item.departamentoId  })">Edit</a>
+                            <a class="btn btn-outline-success mr-2" href="@Url.Action("verCargo", new {  departamentoId=item.departamentoId  })">Ver Cargos</a>
                             <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
                         </td>
                     </tr>

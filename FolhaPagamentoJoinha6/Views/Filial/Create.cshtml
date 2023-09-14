@@ -1,35 +1,32 @@
-﻿@model FolhaPagamentoJoinha6.Models.EmpresaCliente
-
-@{
-    ViewData["Title"] = "Create";
-    
+﻿@{
+    var empresaMae = ViewData["empresaMae"] as EmpresaCliente;
 }
 
 <h1>Create</h1>
-
-<h1>Criar filial</h1>
+<h4>Filial</h4>
 <hr />
-<div class="row ">
-    <div>
-        <form asp-action="Salvar">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <partial name="_CriarFilialPartial" model="new EmpresaCliente()" />
-            <partial name="_CriarEnderecoFilialPartial" model="new Endereco()" />
+<div>
+    <form asp-action="Salvar">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group mt-5 mb-5">
+        <partial name="_CriarFilialPartial" model="new EmpresaCliente()" />
+        <h4>Endereço</h4>
+        <partial name="_CriarEnderecoFilialPartial" model="new Endereco()" />
 
-                <a class="btn btn-secondary" asp-controller="Filial" asp-action="Index">Back to List</a>
-                <input type="submit" value="Salvar" class="btn btn-success" />
-            </div>
+        <div class="form-group mt-5 mb-5">
+            <a class="btn btn-secondary" asp-controller="Empresa" asp-action="Index">Back to List</a>
+            <input type="submit" value="Salvar" class="btn btn-success" />
+        </div>
 
-            <partial name="_FocusInput-btnVoltarValidade">
-        </form>
-    </div>
+        <partial name="_FocusInput-btnVoltarValidade">
+    </form>
 </div>
+
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
