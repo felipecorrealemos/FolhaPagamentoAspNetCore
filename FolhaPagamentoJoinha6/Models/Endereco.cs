@@ -6,7 +6,7 @@ namespace FolhaPagamentoJoinha6.Models
 {
     public class Endereco
     {
-        public int enderecoId { get; set; }
+        public int? enderecoId { get; set; }
 
         [Required(ErrorMessage = mensagemValidacao)]
         public string? cep { get; set; }
@@ -68,10 +68,46 @@ namespace FolhaPagamentoJoinha6.Models
             }
         }
 
+        public static bool AlteraEndereco(IFormCollection collection, Conexao objConexao, SqlTransaction sqlTransaction, out string? mensagemErro)
+        {
+            Endereco endereco = new Endereco().CarregaObjeto(collection);
+
+            string sql = $"UPDATE enderecos SET cep = @cep, rua = @rua, numero = @numero, bairro = @bairro, " +
+                $"complemento = @complemento, cidade = @cidade, estado = @estado, pais = @pais WHERE enderecoId = @enderecoId;";
+
+            try
+            {
+                using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection, sqlTransaction))
+                {
+                    command.Parameters.AddWithValue("@enderecoId", endereco.enderecoId);
+                    command.Parameters.AddWithValue("@cep", endereco.cep?.Trim());
+                    command.Parameters.AddWithValue("@rua", endereco.rua?.Trim());
+                    command.Parameters.AddWithValue("@numero", endereco.numero);
+                    command.Parameters.AddWithValue("@bairro", endereco.bairro?.Trim());
+                    command.Parameters.AddWithValue("@complemento", endereco.complemento?.Trim());
+                    command.Parameters.AddWithValue("@cidade", endereco.cidade?.Trim());
+                    command.Parameters.AddWithValue("@estado", endereco.estado?.Trim());
+                    command.Parameters.AddWithValue("@pais", endereco.pais?.Trim());
+
+                    objConexao.ExecutarComandoSql(command, true);
+                }
+
+                mensagemErro = null;
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                mensagemErro = ex.Message;
+                return false;
+            }
+        }
+
         private Endereco CarregaObjeto(IFormCollection collection)
         {
             Endereco endereco = new Endereco()
             {
+                enderecoId = !string.IsNullOrEmpty(collection["enderecoId"]) ? Convert.ToInt32(collection["enderecoId"]) : null,
                 numero = Convert.ToInt32(collection["numero"]),
                 rua = collection["rua"],
                 bairro = collection["bairro"],
@@ -79,7 +115,7 @@ namespace FolhaPagamentoJoinha6.Models
                 estado = collection["estado"],
                 cep = collection["cep"],
                 pais = collection["pais"],
-                complemento = collection["pais"].ToString()
+                complemento = collection["complemento"].ToString()
             };
 
             return endereco;
@@ -97,7 +133,7 @@ namespace FolhaPagamentoJoinha6.Models
                 estado = dataRow["estado"]?.ToString(),
                 cep = dataRow["cep"]?.ToString(),
                 pais = dataRow["pais"]?.ToString(),
-                complemento = dataRow["pais"]?.ToString()
+                complemento = dataRow["complemento"]?.ToString()
             };
 
             return endereco;

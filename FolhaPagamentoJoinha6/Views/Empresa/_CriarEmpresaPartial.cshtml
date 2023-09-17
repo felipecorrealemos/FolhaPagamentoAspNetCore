@@ -6,6 +6,8 @@
 }
 
 <div hidden class="form-group">
+    <input asp-for="empresaMae" hidden value="@(empresa?.empresaMae)" />
+
     <label asp-for="empresaId" class="control-label"></label>
     <input asp-for="empresaId" class="form-control" value="@((empresa?.empresaId))" />
 </div>

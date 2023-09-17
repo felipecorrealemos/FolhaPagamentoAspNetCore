@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic;
 using NuGet.Protocol.Plugins;
 using System;
 using System.Collections.Generic;
@@ -98,24 +99,35 @@ namespace FolhaPagamentoJoinha6.Models
             }
 
             //verifica se possui o campo ehMatriz no formulario para criar a empresa matriz
-            if (collection.TryGetValue("ehMatriz", out var ehMatrizValue))
+            if (!AlteraEmpresa(collection, empresaId, objConexao, transaction, out mensagemErro))
             {
-                if (!AlteraEmpresa(empresaId.ToString(), empresaId, objConexao, transaction, out mensagemErro))
-                {
-                    objConexao.Rollback(transaction, objConexao.sqlConnection);
-                    return false;
-                }
+                objConexao.Rollback(transaction, objConexao.sqlConnection);
+                return false;
             }
 
-            else
+            objConexao.Commit(transaction, objConexao.sqlConnection);
+            mensagemErro = null;
+            return true;
+        }
+
+        public static bool AlteraEmpresaEEndereco(IFormCollection collection, out string? mensagemErro)
+        {
+            Conexao objConexao = new Conexao();
+            SqlTransaction transaction = objConexao.sqlConnection.BeginTransaction();
+            int empresaId = Convert.ToInt32(collection["empresaId"].ToString());
+
+            if (!Endereco.AlteraEndereco(collection, objConexao, transaction, out mensagemErro))
             {
-                if (!AlteraEmpresa(collection["empresaMae"].ToString(), empresaId, objConexao, transaction, out mensagemErro))
-                {
-                    objConexao.Rollback(transaction, objConexao.sqlConnection);
-                    return false;
-                }
+                return false;
             }
-            
+
+            //cria empresa com o idEndereco
+            if (!AlteraEmpresa(collection, empresaId, objConexao, transaction, out mensagemErro))
+            {
+                objConexao.Rollback(transaction, objConexao.sqlConnection);
+                return false;
+            }
+
             objConexao.Commit(transaction, objConexao.sqlConnection);
             mensagemErro = null;
             return true;
@@ -183,15 +195,42 @@ namespace FolhaPagamentoJoinha6.Models
             }
         }
 
-        private static bool AlteraEmpresa(string? empresaMae, int empresaId, Conexao objConexao, SqlTransaction sqlTransaction, out string? mensagemErro)
+        private static bool AlteraEmpresa(IFormCollection collection, int? empresaId, Conexao objConexao, SqlTransaction sqlTransaction, out string? mensagemErro)
         {
-            string sql = $"UPDATE empresa_clientes SET empresaMae = '{empresaMae}' WHERE empresaId = {empresaId};";
+            EmpresaCliente empresa = CarregaObjeto(collection);
+            empresa.empresaId = !string.IsNullOrEmpty(collection["empresaId"]) ? Convert.ToInt32(collection["empresaId"]) : empresaId;
 
-            SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection, sqlTransaction);
+            string sql = $"UPDATE empresa_clientes SET razaoSocial = @razaoSocial, cnpj = @cnpj, nomeFantasia=@nomeFantasia, " +
+            $"apelido = @apelido, empresaMae = @empresaMae, telefone = @telefone, email = @email, observacao = @observacao " +
+            $"WHERE empresaId = @empresaId;";
 
             try
             {
-                objConexao.ExecutarComandoSql(command, true);
+                using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection, sqlTransaction))
+                {
+                    command.Parameters.AddWithValue("@empresaId", empresa.empresaId);
+                    command.Parameters.AddWithValue("@razaoSocial", empresa.razaoSocial?.Trim());
+                    command.Parameters.AddWithValue("@cnpj", empresa.cnpj?.Trim());
+                    command.Parameters.AddWithValue("@nomeFantasia", empresa.nomeFantasia?.Trim());
+                    command.Parameters.AddWithValue("@apelido", empresa.apelido?.Trim());
+                    //command.Parameters.AddWithValue("@endereco", empresa.endereco);
+                    command.Parameters.AddWithValue("@telefone", empresa.telefone);
+                    command.Parameters.AddWithValue("@email", empresa.email);
+                    command.Parameters.AddWithValue("@observacao", empresa.observacao);
+
+                    if (empresa.ehMatriz)
+                    {
+                        command.Parameters.AddWithValue("@empresaMae", empresa.empresaId);
+                    }
+
+                    else
+                    {
+                        command.Parameters.AddWithValue("@empresaMae", empresa.empresaMae);
+                    }
+
+                    objConexao.ExecutarComandoSql(command, true);
+                }
+
                 mensagemErro = null;
                 return true;
             }
@@ -200,30 +239,6 @@ namespace FolhaPagamentoJoinha6.Models
             {
                 mensagemErro = ex.Message;
                 return false;
-            }
-        }
-
-        public static void AlterarEmpresa(IFormCollection collection)
-        {
-            EmpresaCliente empresa = new EmpresaCliente()
-            {
-                empresaId = Convert.ToInt32(collection["empresaId"]),
-                razaoSocial = collection["razaoSocial"],
-                // cnpjBase = collection["cnpjBase"],
-            };
-
-            Conexao objConexao = new Conexao();
-
-            string sql = "UPDATE empresa_clientes SET razaoSocial = @razaoSocial, cnpj = @cnpj" +
-                "WHERE empresaId = @empresaId";
-
-            using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection))
-            {
-                command.Parameters.AddWithValue("@empresaId", empresa.empresaId);
-                command.Parameters.AddWithValue("@razaoSocial", empresa.razaoSocial.Trim());
-                command.Parameters.AddWithValue("@cnpj", empresa.cnpj.Trim());
-
-                objConexao.ExecutarComandoSql(command, false);
             }
         }
 

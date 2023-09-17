@@ -19,10 +19,10 @@
                     ID
                 </th>
                 <th>
-                    CNPJ
+                    Razão Social
                 </th>
                 <th>
-                    Razão Social
+                    CNPJ
                 </th>
                 <th>
                     Nome Fantasia
@@ -43,10 +43,10 @@
                             @Html.DisplayFor(modelItem => empresa.empresaId)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => empresa.cnpj)
+                            @Html.DisplayFor(modelItem => empresa.razaoSocial)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => empresa.razaoSocial)
+                            @Html.DisplayFor(modelItem => empresa.cnpj)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => empresa.nomeFantasia)
@@ -55,7 +55,7 @@
                             @Html.DisplayFor(modelItem => empresa.email)
                         </td>
                         <td>
-                            <a class="btn btn-outline-secondary disabled mr-2" href="@Url.Action("Create", new {empresaId=empresa.empresaId })">Editar</a>
+                            <a class="btn btn-outline-secondary mr-2" href="@Url.Action("Create", new {empresaId=empresa.empresaId })">Editar</a>
                             <a class="btn btn-outline-success mr-2" href="@Url.Action("VerFilial", new {  empresaId=empresa.empresaId })">Filial</a>
                             <a class="btn btn-outline-success mr-2" href="@Url.Action("VerDepartamento", new {  empresaId=empresa.empresaId })">Departamentos</a>
                             <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>

@@ -200,7 +200,7 @@ namespace FolhaPagamentoJoinha6.Models
         {
             Funcionario funcionario = new Funcionario()
             {
-                primeiroNome = collection["primeiroNome"].ToString(),
+            primeiroNome = collection["primeiroNome"].ToString(),
                 ultimoNome = collection["ultimoNome"].ToString(),
                 nomeSocial = collection["nomeSocial"].ToString(),
                 rg = collection["rg"].ToString(),

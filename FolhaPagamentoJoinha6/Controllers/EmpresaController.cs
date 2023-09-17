@@ -55,28 +55,27 @@ namespace FolhaPagamentoJoinha6.Controllers
                      ViewData["Filial"] = filial;
                      return View("Create");
                  }
-
-                 if (!string.IsNullOrEmpty(collection["idEmpresa"]))
-                 {
-                     EmpresaCliente.AlterarEmpresa(collection);
-                     Filial.AlterarFilial1(collection);
-                     TempData["SuccessMessage"] = "Registro alterado com sucesso.";
-                 }
-
-                 else
-                 {*/
-                if (EmpresaCliente.CriarEmpresaEEndereco(collection, out string? mensagemErro))
+                */
+                if (!string.IsNullOrEmpty(collection["empresaId"]))
                 {
-                    TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
+                    EmpresaCliente.AlteraEmpresaEEndereco(collection, out string? mensagemErro);
+                    TempData["SuccessMessage"] = "Registro alterado com sucesso.";
                 }
 
                 else
                 {
-                    TempData["ErrorMessage"] = $"Erro, {mensagemErro}.";
-                }
-                //}
+                    if (EmpresaCliente.CriarEmpresaEEndereco(collection, out string? mensagemErro))
+                    {
+                        TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
+                    }
 
+                   /* else
+                    {
+                        TempData["ErrorMessage"] = $"Erro, {mensagemErro}.";
+                    }*/
+                }
             }
+
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
