@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Security.Policy;
 
 namespace FolhaPagamentoJoinha6.Models
 {
@@ -25,7 +26,7 @@ namespace FolhaPagamentoJoinha6.Models
         [Required(ErrorMessage = mensagemValidacao)]
         public string? cidade { get; set; }
 
-        [Required(ErrorMessage = mensagemValidacao)]
+        [Required(ErrorMessage = "Por favor, selecione um estado.")]
         public string? estado { get; set; }
 
         [Required(ErrorMessage = mensagemValidacao)]
@@ -155,6 +156,12 @@ namespace FolhaPagamentoJoinha6.Models
             {
                 return null;
             }
+        }
+
+        public static List<string> CarregaEstados()
+        {
+            List<string> estados = new List<string>() { "SP", "MG", "BA", "AM" };
+            return estados;
         }
     }
 }

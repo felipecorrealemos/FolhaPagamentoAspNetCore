@@ -70,8 +70,9 @@
                         @func?.pcd
                     </td>
                     <td>
-                            <a class="btn btn-outline-secondary disabled mr-2" href="@Url.Action("Details", new {  id=func.funcionarioId  })">Details</a>
-                            <a class="btn btn-outline-success disabled mr-2" href="@Url.Action("Edit", new {  id=func.funcionarioId  })">Edit</a>
+
+                            <a class="btn btn-outline-success disabled mr-2" href="@Url.Action("Edit", new {  funcionarioId=func.funcionarioId  })">Edit</a>
+                            <a class="btn btn-outline-secondary mr-2" href="@Url.Action("VerDependente", new { funcionarioId=func.funcionarioId  })">Dependentes</a>
                         <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
                     </td>
                 </tr>

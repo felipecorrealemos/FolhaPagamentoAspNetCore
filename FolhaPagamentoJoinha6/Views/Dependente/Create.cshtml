@@ -1,0 +1,65 @@
+﻿@model FolhaPagamentoJoinha6.Models.Dependente
+
+@{
+    ViewData["Title"] = "Create";
+    var funcionarioId = ViewData["funcionarioId"] as int?;
+    var dependente = ViewData["Dependente"] as Dependente;
+}
+
+<h1>Create</h1>
+<h4>Dependente</h4>
+<hr />
+
+<div>
+    <form asp-action="Salvar">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row mb-3">
+            <div class="form-group col-md-6 col-12">
+                <label asp-for="primeiroNome" class="control-label"></label>
+                <input asp-for="primeiroNome" class="form-control" value="@(dependente?.primeiroNome)" />
+                <span asp-validation-for="primeiroNome" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6 col-12">
+                <label asp-for="segundoNome" class="control-label"></label>
+                <input asp-for="segundoNome" class="form-control" value="@(dependente?.segundoNome)" />
+                <span asp-validation-for="segundoNome" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="form-group col-md-3 col-12">
+                <label asp-for="cpf" class="control-label"></label>
+                <input asp-for="cpf" class="form-control" value="@(dependente?.cpf)" />
+                <span asp-validation-for="cpf" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3 col-12">
+                <label asp-for="dataNasc" class="control-label"></label>
+                <input asp-for="dataNasc" value="@DateTime.Now" type="date" class="form-control" />
+                <span asp-validation-for="dataNasc" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="form-group col-md-4 col-12">
+                <label asp-for="grauParent" class="control-label"></label>
+                <input asp-for="grauParent" class="form-control" value="@(dependente?.grauParent)" />
+                <span asp-validation-for="grauParent" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="funcionarioId" class="control-label"></label>
+                <input asp-for="funcionarioId" hidden value="@(funcionarioId)" class="form-control" />
+                <input asp-for="funcionarioId" disabled value="@(funcionarioId)" class="form-control" />
+                <span asp-validation-for="funcionarioId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group mt-5 mb-5">
+            <a class="btn btn-secondary" asp-controller="Funcionario" asp-action="Index">Back to Funcionarios</a>
+            <input type="submit" value="Salvar" class="btn btn-success" />
+        </div>
+        <partial name="_FocusInput-btnVoltarValidade">
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -9,7 +9,7 @@
     <input asp-for="empresaMae" hidden value="@(empresa?.empresaMae)" />
 
     <label asp-for="empresaId" class="control-label"></label>
-    <input asp-for="empresaId" class="form-control" value="@((empresa?.empresaId))" />
+    <input asp-for="empresaId" class="form-control" value="@(empresa?.empresaId)" />
 </div>
 
 <div class="row mb-3">
@@ -59,6 +59,7 @@
 
 <div class="form-group row col-12 mb-3">
     <label asp-for="observacao" class="control-label"></label>
+    <!--Html.TextAreaFor(model => model.observacao, new { class = "form-control", rows = "15" })-->
     <textarea name="observacao" rows="3" maxlength="255" class="form-control">@((empresa?.observacao) ?? "")</textarea>
 </div>
 

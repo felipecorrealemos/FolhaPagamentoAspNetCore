@@ -36,6 +36,9 @@ namespace FolhaPagamentoJoinha6.Controllers
                 }
             }
 
+            List<string> estados = Endereco.CarregaEstados();
+            ViewData["Estados"] = estados;
+
             return View();
         }
 

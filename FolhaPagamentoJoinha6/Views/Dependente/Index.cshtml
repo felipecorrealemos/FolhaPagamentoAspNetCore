@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    var funcionarioId = ViewData["funcionarioId"] as int?;
+    var listaDependente = ViewData["ListaDependente"] as List<Dependente>;
+}
+
+<h1 class="animate__animated animate__fadeInLeft">Dependente de @(funcionarioId)</h1>
+
+<partial name="_AlertsPartial">
+
+    <div class="col-md-2 mt-4">
+        <form>
+            <input type="hidden" name="funcionarioId" value="@(funcionarioId)" />
+            <button type="submit" class="btn btn-primary" asp-action="Create" >Criar dependente</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    primeiroNome
+                </th>
+                <th>
+                    segundoNome
+                </th>
+                <th>
+                    cpf
+                </th>
+                <th>
+                    dataNasc
+                </th>
+                <th>
+                    grauParent
+                </th>
+                <th>
+                    funcionarioId
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (listaDependente != null)
+            {
+                @foreach (var dependente in listaDependente)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => dependente.primeiroNome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => dependente.segundoNome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => dependente.cpf)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => dependente.dataNasc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => dependente.grauParent)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => dependente.funcionarioId)
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-secondary mr-2 disabled" href="@Url.Action("Create", new {funcionarioId=dependente.funcionarioId })">Editar</a>
+                        </td>
+                    </tr>
+                }
+            }
+
+            else
+            {
+                <tr>
+                    <td>0</td>
+                    <td>nenhum resultado</td>
+                    <td>0</td>
+                </tr>
+            }
+
+            <partial name="_info-message">
+        </tbody>
+    </table>
+
+    <div class="mt-5 mb-5">
+        <form asp-controller="Funcionario" asp-action="Index">
+            <button class="btn btn-secondary" onclick="voltar()">Back to Funcionarios</button>
+        </form>
+    </div>

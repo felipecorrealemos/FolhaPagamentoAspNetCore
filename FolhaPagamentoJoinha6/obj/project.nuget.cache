@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "EgQOffLfbnqUziG/mxVmnjJY6N1yc3AdD62SoNEdldoRks/ULPKfGQL6hDBKtiMfDdFsg1GRnXi5trjP4xnhZA==",
+  "dgSpecHash": "2hs0vTvD3yzXu7dVen5ORtSRP8m5QCi4vNXQDVSzid4lywCCp7A70GJ1K5pckWsAOpAhPEdm7+GsBkolNoCigw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Felipe\\Documents\\GitHub\\FolhaPagamentoAspNetCore\\FolhaPagamentoJoinha6\\FolhaPagamentoJoinha6.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,7 @@
     "C:\\Users\\Felipe\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\Felipe\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\Felipe\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\Felipe\\.nuget\\packages\\jquery.inputmask\\5.0.8\\jquery.inputmask.5.0.8.nupkg.sha512",
     "C:\\Users\\Felipe\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\Felipe\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\Felipe\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",

@@ -70,6 +70,11 @@ namespace FolhaPagamentoJoinha6.Controllers
             return View();
         }
 
+        public ActionResult VerDependente(int funcionarioId)
+        {
+            return RedirectToAction("Index", "Dependente", new { funcionarioId });
+        }
+
         // GET: FuncionarioController/Details/5
         public ActionResult Details(int id)
         {
@@ -79,6 +84,9 @@ namespace FolhaPagamentoJoinha6.Controllers
         // GET: FuncionarioController/Create
         public ActionResult Create()
         {
+            List<string> estados = Endereco.CarregaEstados();
+            ViewData["Estados"] = estados;
+
             return View();
         }
 

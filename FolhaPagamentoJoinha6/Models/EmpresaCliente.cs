@@ -15,6 +15,8 @@ namespace FolhaPagamentoJoinha6.Models
     {
         public int? empresaId { get; set; }
 
+        //[Display(Name = "cnpj")]
+        //[RegularExpression(@"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$", ErrorMessage = "Formato inválido. Use 00.000.000/0001-00")]
         [Required(ErrorMessage = mensagemValidacao)]
         public string cnpj { get; set; }
 
