@@ -77,6 +77,23 @@ namespace FolhaPagamentoJoinha6.Models
             return departamento;
         }
 
+        public static List<Departamento> GetDepartamentoEmpresaId(int empresaId)
+        {
+            Conexao objConexao = new Conexao();
+
+            string sql = $"SELECT * FROM departamentos WHERE empresaId = {empresaId}";
+            DataTable dt = objConexao.RetornaDataTable(sql);
+            List<Departamento> listaDepartamento = new List<Departamento>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Departamento departamento = CarregaObjeto(row);
+                listaDepartamento.Add(departamento);
+            }
+
+            return listaDepartamento;
+        }
+
         public static Departamento CarregaObjeto(IFormCollection collection)
         {
             Departamento departamento = new Departamento()

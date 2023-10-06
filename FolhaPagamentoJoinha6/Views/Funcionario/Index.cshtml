@@ -1,83 +1,85 @@
 ﻿@{
     ViewData["Title"] = "Index";
     var listaFuncionario = ViewData["ListaFuncionario"] as List<Funcionario>;
+    var empresa = ViewData["Empresa"] as EmpresaCliente;
 }
 
-<h1>Funcionarios</h1>
+<h1>Funcionarios de @empresa?.razaoSocial</h1>
 
 <partial name="_AlertsPartial">
 
-<div class="col-md-2 mt-4">
-    <form>
-        <button type="submit" class="btn btn-primary" asp-action="Create">Criar novo funcionario</button>
-
-        <input type="hidden" name="qtdHorasSem" id="qtdHorasSem" value="40">
-        <input type="hidden" name="qtdDiasTrab" id="qtdDiasTrab" value="20">
-        <button type="submit" class="btn btn-secondary mt-5" asp-action="RegistroPontoAutomatico">Gerar ponto mensal</button>
-    </form>
-</div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Primeiro nome
-            </th>
-            <th>
-                Ultimo nome
-            </th>
-            <th>
-                data nascimento
-            </th>
-            <th>
-                telefone
-            </th>
-            <th>
-                email
-            </th>
-            <th>
-                pcd
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (listaFuncionario != null)
-        {
-            @foreach (var func in listaFuncionario)
+    <div class="col-md-2 mt-4">
+        <form>
+            <button type="submit" class="btn btn-primary" asp-action="Create">Criar novo funcionario</button>
+            <input type="hidden" name="empresaId" value="@empresa?.empresaId">
+            <input type="hidden" name="razaoSocial" value="@empresa?.razaoSocial">
+            <input type="hidden" name="qtdHorasSem" id="qtdHorasSem" value="40">
+            <input type="hidden" name="qtdDiasTrab" id="qtdDiasTrab" value="20">
+            <button type="submit" class="btn btn-secondary mt-5" hidden asp-action="RegistroPontoAutomatico">Gerar ponto mensal</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Primeiro nome
+                </th>
+                <th>
+                    Ultimo nome
+                </th>
+                <th>
+                    data nascimento
+                </th>
+                <th>
+                    telefone
+                </th>
+                <th>
+                    email
+                </th>
+                <th>
+                    pcd
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (listaFuncionario != null)
             {
-                <tr>
-                    <td class="align-content-center">
-                        @func?.funcionarioId
-                    </td>
-                    <td>
-                        @func?.primeiroNome
-                    </td>
-                    <td>
-                        @func?.ultimoNome
-                    </td>
-                    <td>
-                        @func?.dataNasc?.ToString("dd/MM/yyyy")
-                    </td>
-                    <td>
-                        @func?.telefone
-                    </td>
-                    <td>
-                        @func?.email
-                    </td>
-                    <td>
-                        @func?.pcd
-                    </td>
-                    <td>
+                @foreach (var func in listaFuncionario)
+                {
+                    <tr>
+                        <td class="align-content-center">
+                            @func?.funcionarioId
+                        </td>
+                        <td>
+                            @func?.primeiroNome
+                        </td>
+                        <td>
+                            @func?.ultimoNome
+                        </td>
+                        <td>
+                            @func?.dataNasc?.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @func?.telefone
+                        </td>
+                        <td>
+                            @func?.email
+                        </td>
+                        <td>
+                            @func?.pcd
+                        </td>
+                        <td>
 
                             <a class="btn btn-outline-success disabled mr-2" href="@Url.Action("Edit", new {  funcionarioId=func.funcionarioId  })">Edit</a>
                             <a class="btn btn-outline-secondary mr-2" href="@Url.Action("VerDependente", new { funcionarioId=func.funcionarioId  })">Dependentes</a>
-                        <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
-                    </td>
-                </tr>
+                            <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
+                        </td>
+                    </tr>
+                }
             }
-        }
             <partial name="_info-message">
-    </tbody>
-</table>
+        </tbody>
+    </table>

@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Create";
     var funcionario = ViewData["Funcionario"] as Funcionario;
+    var listaDepartamentos = ViewData["ListaDepartamentos"] as List<Departamento>;
+    var listaCargos = ViewData["ListaCargos"] as List<Cargo>;
 }
 
 <div hidden class="form-group">
@@ -58,7 +60,8 @@
 
 </div>
 <div class="form-group form-check col-md-2 mb-3">
-    <label class="form-check-label">PCD
+    <label class="form-check-label">
+        PCD
         <input class="form-check-input" name="pcd" type="checkbox" asp-for="pcd" />
     </label>
 </div>
@@ -88,10 +91,31 @@
         <span asp-validation-for="dataDemissao" class="text-danger"></span>
     </div>
 </div>
-<div class="form-group col-md-3 mb-3">
-    <label asp-for="cargoId" class="control-label"></label>
-    <input asp-for="cargoId" class="form-control" />
-    <span asp-validation-for="cargoId" class="text-danger"></span>
+<div class="row mb-3">
+    <div class="form-group col-md-3 col-12">
+        <label>Departamento</label>
+        <select style="color:black;background-color:white" name="departamento" id="departamento" onchange="carregarCargos()" class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            <option style="color:black" value="">Selecione</option>
+
+            @for (int i = 0; i < listaDepartamentos?.Count; i++)
+            {
+                <option style="color:black" value="@listaDepartamentos[i]?.departamentoId">@listaDepartamentos[i]?.departamentoNome</option>
+            }
+
+        </select>
+    </div>
+    <div class="form-group col-md-3 col-12">
+        <label>Cargo</label>
+        <select style="color:black;background-color:white" class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            <option style="color:black" value="">Selecione</option>
+
+            @for (int i = 0; i < listaCargos?.Count; i++)
+            {
+                <option style="color:black" value="@listaCargos[i]?.cargoId">@listaCargos[i]?.cargoNome</option>
+            }
+
+        </select>
+    </div>
 </div>
 <div class="row mb-3">
     <div class="form-group col-md-3">
@@ -100,3 +124,15 @@
         <span asp-validation-for="etnia" class="text-danger"></span>
     </div>
 </div>
+
+<script>
+    function carregarCargos() {
+        var departamentoId = document.getElementById('departamento').value;
+        if (departamentoId != '') {
+
+    @listaCargos = Cargo.GetListaCargo(departamentoId);
+            // Execute aqui a lógica para carregar os cargos com base no departamento selecionado.
+            // Você pode usar AJAX ou outra técnica adequada para buscar os cargos do servidor.
+        }
+    }
+</script>

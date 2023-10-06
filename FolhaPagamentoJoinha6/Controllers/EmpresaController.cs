@@ -72,10 +72,10 @@ namespace FolhaPagamentoJoinha6.Controllers
                         TempData["SuccessMessage"] = "Registro cadastrado com sucesso.";
                     }
 
-                   /* else
-                    {
-                        TempData["ErrorMessage"] = $"Erro, {mensagemErro}.";
-                    }*/
+                    /* else
+                     {
+                         TempData["ErrorMessage"] = $"Erro, {mensagemErro}.";
+                     }*/
                 }
             }
 
@@ -91,7 +91,6 @@ namespace FolhaPagamentoJoinha6.Controllers
         {
             try
             {
-                //TempData["empresaId"] = empresaId;
                 return RedirectToAction("Index", "Filial", new { empresaId });
             }
 
@@ -103,20 +102,6 @@ namespace FolhaPagamentoJoinha6.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult VerDepartamento(int empresaId)
-        {
-            try
-            {
-                //TempData["idEmpresa"] = idEmpresa;
-                return RedirectToAction("Index", "Departamento", new { empresaId });
-            }
-
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
+       
     }
 }

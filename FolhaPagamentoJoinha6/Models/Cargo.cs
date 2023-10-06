@@ -57,6 +57,26 @@ namespace FolhaPagamentoJoinha6.Models
             return listaCargo;
         }
 
+        public static List<Cargo> GetListaCargoEmpresaId(int empresaId)
+        {
+            Conexao objConexao = new Conexao();
+            List<Cargo> listaCargo = new List<Cargo>();
+
+            string sql = $"SELECT c.* FROM cargos AS c " +
+                $"INNER JOIN departamentos AS d ON c.departamentoId = d.departamentoId " +
+                $"INNER JOIN empresa_clientes AS e ON d.empresaId = e.empresaId " +
+                $"WHERE e.empresaId = {empresaId}";
+            DataTable dt = objConexao.RetornaDataTable(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Cargo cargo = CarregaObjeto(row);
+                listaCargo.Add(cargo);
+            }
+
+            return listaCargo;
+        }
+
         private static Cargo CarregaObjeto(IFormCollection collection)
         {
             Cargo cargo = new Cargo()

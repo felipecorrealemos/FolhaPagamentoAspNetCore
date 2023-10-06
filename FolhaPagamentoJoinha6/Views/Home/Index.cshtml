@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var listaDepartamentos = ViewData["ListaDepartamentos"] as List<Departamento>;
+    var listaCargos = ViewData["ListaCargos"] as List<Cargo>;
 }
 
 <div class="text-center">
@@ -11,13 +13,54 @@
 <form method="get">
     <div class="row">
         <div class="form-group col-3">
-            <button type="submit" class="btn btn-primary" asp-controller="Funcionario" asp-action="Index">Funcionarios</button>
-        </div>
-        <div class="form-group col-3">
             <button type="submit" class="btn btn-primary" asp-controller="Empresa" asp-action="Index">
                 <i class="bi bi-arrow-left-short"></i>Empresas
             </button>
         </div>
-        
+    </div>
+    <div class="row mb-3">
+        <div class="form-group col-md-3 col-12">
+            <label>Departamento</label>
+            <select style="color:black;background-color:white" name="departamento" id="departamentoId" onchange="carregarCargos()" class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                <option style="color:black" value="">Selecione</option>
+
+                @for (int i = 0; i < listaDepartamentos?.Count; i++)
+                {
+                    <option style="color:black" value="@listaDepartamentos[i]?.departamentoId">@listaDepartamentos[i]?.departamentoNome</option>
+                }
+
+            </select>
+        </div>
+        <div class="form-group col-md-3 col-12">
+            <label>Cargo</label>
+            <select style="color:black;background-color:white" class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                <option style="color:black" value="">Selecione</option>
+
+                @for (int i = 0; i < listaCargos?.Count; i++)
+                {
+                    <option style="color:black" value="@listaCargos[i]?.cargoId">@listaCargos[i]?.cargoNome</option>
+                }
+
+            </select>
+        </div>
     </div>
 </form>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Quando o valor do departamento é alterado
+            $('#departamentoId').change(function () {
+                // Obtém o valor selecionado
+                var departamentoId = $(this).val();
+
+                // Filtra os cargos com base no departamento selecionado
+                $('#cargoId option').show();
+                $('#cargoId option').filter(function () {
+                    return $(this).val() != '' && $(this).data('departamento') != departamentoId;
+                }).hide();
+            });
+        });
+    </script>
+}
+

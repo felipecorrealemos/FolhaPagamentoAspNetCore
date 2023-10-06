@@ -8,10 +8,13 @@ using System.Web;
 
 namespace FolhaPagamentoJoinha6.Models
 {
-    public class Filial : EmpresaCliente
+    public class Filial
     {
         public int idFilial { get; set; }
-        
+
+        [Required(ErrorMessage = mensagemValidacao)]
+        public string razaoSocial { get; set; }
+
         [Required(ErrorMessage = mensagemValidacao)]
         public string cnpjFilial { get; set; }
         public string? email { get; set; }
@@ -28,7 +31,7 @@ namespace FolhaPagamentoJoinha6.Models
         public static void CriarFilial(IFormCollection collection, int idEmpresa)
         {
             Filial filial = new Filial().CarregaObjetoFilial1(collection);
-            filial.empresaId = idEmpresa;
+          //  filial.empresaId = idEmpresa;
 
             if (string.IsNullOrEmpty(filial.cnpjFilial))
             {
@@ -42,13 +45,13 @@ namespace FolhaPagamentoJoinha6.Models
 
             using (SqlCommand command = new SqlCommand(sql, objConexao.sqlConnection))
             {
-                command.Parameters.AddWithValue("@idEmpresa", filial.empresaId);
+              //  command.Parameters.AddWithValue("@idEmpresa", filial.empresaId);
                 command.Parameters.AddWithValue("@cnpjFilial", filial.cnpjFilial.Trim());
                 command.Parameters.AddWithValue("@eMail", filial.email.Trim());
                 command.Parameters.AddWithValue("@nomeFantasia", filial.nomeFantasia.Trim());
                 command.Parameters.AddWithValue("@observacoes", filial.observacoes.Trim());
 
-                objConexao.ExecutarComandoSql(command,false);
+                objConexao.ExecutarComandoSql(command, false);
             }
         }
 
@@ -81,13 +84,13 @@ namespace FolhaPagamentoJoinha6.Models
                 nomeFantasia = collection["nomeFantasia"],
                 //cnpjBase = collection["cnpjBase"],
                 cnpjFilial = collection?["cnpjFilial"],
-                email = collection["email"],
-                observacoes = collection["observacoes"]
+                email = collection?["email"],
+                observacoes = collection?["observacoes"]
             };
 
             if (!string.IsNullOrEmpty(collection["idEmpresa"]))
             {
-                filial.empresaId = Convert.ToInt32(collection["idEmpresa"]);
+              //  filial.empresaId = Convert.ToInt32(collection["empresaId"]);
             }
 
             /*
@@ -107,7 +110,7 @@ namespace FolhaPagamentoJoinha6.Models
             Filial filial = new Filial()
             {
                 idFilial = Convert.ToInt32(row["idFilial"]),
-                empresaId = Convert.ToInt32(row["empresaId"]),
+              //  empresaId = Convert.ToInt32(row["empresaId"]),
                 nomeFantasia = row["nomeFantasia"]?.ToString(),
                 cnpjFilial = row["cnpjFilial"]?.ToString(),
                 email = row["email"]?.ToString(),
@@ -146,7 +149,5 @@ namespace FolhaPagamentoJoinha6.Models
 
             return listaFilial;
         }
-
-
     }
 }

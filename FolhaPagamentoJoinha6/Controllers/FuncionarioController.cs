@@ -7,12 +7,17 @@ namespace FolhaPagamentoJoinha6.Controllers
     public class FuncionarioController : Controller
     {
         // GET: FuncionarioController
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
+            //List<string> listaInformacoes = Funcionario.ConsultaInfo();
+
             try
             {
-                List<Funcionario> listaFuncionario = Funcionario.GetListafuncionario();
+                List<Funcionario> listaFuncionario = Funcionario.GetListafuncionario(id);
                 ViewData["ListaFuncionario"] = listaFuncionario;
+
+                EmpresaCliente empresaCliente = EmpresaCliente.GetEmpresa(id);
+                ViewData["Empresa"] = empresaCliente;
             }
 
             catch (Exception ex)
@@ -82,10 +87,18 @@ namespace FolhaPagamentoJoinha6.Controllers
         }
 
         // GET: FuncionarioController/Create
-        public ActionResult Create()
+        public ActionResult Create(int empresaId)
         {
             List<string> estados = Endereco.CarregaEstados();
             ViewData["Estados"] = estados;
+
+            //carrega departamento da empresaId
+            List<Departamento> listaDepartamentos = Departamento.GetDepartamentoEmpresaId(empresaId);
+            ViewData["ListaDepartamentos"] = listaDepartamentos;
+
+            //carrega cargo da empresaId
+            List<Cargo> listaCargos = new List<Cargo>();//Cargo.GetListaCargoEmpresaId(empresaId);
+            ViewData["ListaCargos"] = listaCargos;
 
             return View();
         }

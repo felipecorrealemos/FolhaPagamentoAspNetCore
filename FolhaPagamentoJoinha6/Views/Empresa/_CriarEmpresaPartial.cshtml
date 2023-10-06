@@ -15,7 +15,7 @@
 <div class="row mb-3">
     <div class="form-group col-md-6 col-12">
         <label asp-for="razaoSocial" class="control-label"></label>
-        <input asp-for="razaoSocial" maxlength="64" placeholder="ex: Botica Comercial Farmaceutica LTDA – O Boticário" class="form-control" value="@((empresa?.razaoSocial) ?? "")" />
+        <input asp-for="razaoSocial" maxlength="64" placeholder="ex: Botica Comercial Farmaceutica LTDA – O Boticário max:64" class="form-control" value="@((empresa?.razaoSocial) ?? "")" />
         <span asp-validation-for="razaoSocial" class="text-danger"></span>
     </div>
 

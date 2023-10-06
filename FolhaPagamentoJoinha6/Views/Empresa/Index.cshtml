@@ -3,7 +3,7 @@
     var listaEmpresa = ViewData["ListaEmpresa"] as List<EmpresaCliente>;
 }
 
-<h1 class="animate__animated animate__fadeInLeft">Empresas</h1>
+<h1 class="animate__animated animate__fadeInLeft">Empresas Matriz</h1>
 
 <partial name="_AlertsPartial">
 
@@ -55,10 +55,8 @@
                             @Html.DisplayFor(modelItem => empresa.email)
                         </td>
                         <td>
-                            <a class="btn btn-outline-secondary mr-2" href="@Url.Action("Create", new {empresaId=empresa.empresaId })">Editar</a>
-                            <a class="btn btn-outline-success mr-2" href="@Url.Action("VerFilial", new {  empresaId=empresa.empresaId })">Filial</a>
-                            <a class="btn btn-outline-success mr-2" href="@Url.Action("VerDepartamento", new {  empresaId=empresa.empresaId })">Departamentos</a>
-                            <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
+                            <a class="btn btn-outline-secondary mr-2" href="@Url.Action("VerFilial", new {empresaId=empresa.empresaId })">Acessar</a>
+                            <a class="btn btn-outline-danger disabled" hidden title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
                         </td>
                     </tr>
                 }

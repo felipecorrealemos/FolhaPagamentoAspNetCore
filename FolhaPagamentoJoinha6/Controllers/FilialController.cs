@@ -26,6 +26,37 @@ namespace FolhaPagamentoJoinha6.Controllers
             return View();
         }
 
+        public IActionResult VerFuncionario(int id)
+        {
+            try
+            {
+                return RedirectToAction("Index", "Funcionario", new { id });
+            }
+
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult VerDepartamento(int id)
+        {
+            try
+            {
+                int empresaId = id;
+                return RedirectToAction("Index", "Departamento", new { empresaId });
+            }
+
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Erro, {ex.Message}.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: FilialController/Details/5
         public ActionResult Details(int id)
         {

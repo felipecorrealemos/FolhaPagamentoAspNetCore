@@ -6,7 +6,7 @@
     var empresaMae = ViewData["empresaMae"] as EmpresaCliente;
 }
 
-<h1>Filial de @empresaMae?.razaoSocial</h1>
+<h1>@empresaMae?.razaoSocial</h1>
 
 <partial name="_AlertsPartial">
 
@@ -18,7 +18,7 @@
         <thead>
             <tr>
                 <th>
-                    idFilial
+                    empresaId
                 </th>
                 <th>
                     CNPJ
@@ -36,8 +36,40 @@
             </tr>
         </thead>
         <tbody>
+            @if (empresaMae != null)
+            {
+                // carregando a matriz
+                
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => empresaMae.empresaId)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => empresaMae.cnpj)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => empresaMae.email)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => empresaMae.nomeFantasia)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => empresaMae.empresaMae)
+                        </td>
+
+                        <td>
+                        <a class="btn btn-outline-success mr-2 disabled" href="@Url.Action("Edit", new {  id=empresaMae.empresaId  })">Edit</a>
+                        <a class="btn btn-outline-secondary mr-2" href="@Url.Action("VerDepartamento", new {id=empresaMae.empresaId })">Departamento</a>
+                        <a class="btn btn-outline-secondary mr-2" href="@Url.Action("VerFuncionario", new {id=empresaMae.empresaId })">Funcionario</a>
+                            <a class="btn btn-outline-danger disabled" title="Função desativada" data-toggle="tooltip" href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })">Delete</a>
+                        </td>
+                    </tr>
+                
+            }
+
             @if (listaFilial != null)
             {
+                //carregando as filiais
                 foreach (var empresa in listaFilial)
                 {
                     <tr>

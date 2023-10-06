@@ -142,6 +142,28 @@ namespace FolhaPagamentoJoinha6.Models
             return listaFuncionario;
         }
 
+        public static List<Funcionario> GetListafuncionario(int empresaId)
+        {
+            Conexao objConexao = new Conexao();
+            List<Funcionario> listaFuncionario = new List<Funcionario>();
+
+            string sql = "SELECT f.* FROM funcionarios AS f " +
+                "INNER JOIN cargos AS c ON f.cargoId = c.cargoId " +
+                "INNER JOIN departamentos AS d ON c.departamentoId = d.departamentoId " +
+                "INNER JOIN empresa_clientes AS e ON d.empresaId = e.empresaId " +
+                $"WHERE e.empresaId = {empresaId};";
+
+            DataTable dt = objConexao.RetornaDataTable(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Funcionario funcionario = CarregaObjeto(row);
+                listaFuncionario.Add(funcionario);
+            }
+
+            return listaFuncionario;
+        }
+
         public static Funcionario? Getfuncionario(int? funcionarioId)
         {
             Conexao objConexao = new Conexao();
@@ -200,7 +222,7 @@ namespace FolhaPagamentoJoinha6.Models
         {
             Funcionario funcionario = new Funcionario()
             {
-            primeiroNome = collection["primeiroNome"].ToString(),
+                primeiroNome = collection["primeiroNome"].ToString(),
                 ultimoNome = collection["ultimoNome"].ToString(),
                 nomeSocial = collection["nomeSocial"].ToString(),
                 rg = collection["rg"].ToString(),
@@ -250,20 +272,20 @@ namespace FolhaPagamentoJoinha6.Models
             funcionario.dataAdmissao = ConverteData(dataRow, "dataAdmissao");
             funcionario.dataDemissao = ConverteData(dataRow, "dataDemissao");
 
-           /* if (dataRow["dataNasc"] != DBNull.Value)
-            {
-                funcionario.dataNasc = Convert.ToDateTime(dataRow["dataNasc"]);
-            }
+            /* if (dataRow["dataNasc"] != DBNull.Value)
+             {
+                 funcionario.dataNasc = Convert.ToDateTime(dataRow["dataNasc"]);
+             }
 
-            if (dataRow["dataAdmissao"] != DBNull.Value)
-            {
-                funcionario.dataAdmissao = Convert.ToDateTime(dataRow["dataAdmissao"]);
-            }
+             if (dataRow["dataAdmissao"] != DBNull.Value)
+             {
+                 funcionario.dataAdmissao = Convert.ToDateTime(dataRow["dataAdmissao"]);
+             }
 
-            if (dataRow["dataDemissao"] != DBNull.Value)
-            {
-                funcionario.dataDemissao = Convert.ToDateTime(dataRow["dataDemissao"]);
-            }*/
+             if (dataRow["dataDemissao"] != DBNull.Value)
+             {
+                 funcionario.dataDemissao = Convert.ToDateTime(dataRow["dataDemissao"]);
+             }*/
 
             if (dataRow["pcd"] != DBNull.Value)
             {
@@ -309,87 +331,15 @@ namespace FolhaPagamentoJoinha6.Models
             return false;
         }
 
-       /* public static List<AtestadoMedico> GetAtestadosMedicos(int idFuncionario)
+        public static List<string> ConsultaEspelhoPonto()
         {
-            Funcionario funcionario = new Funcionario();
-            funcionario.listaAtestadoMedico = new List<AtestadoMedico>();//ClasseConexaoGET(ComandoSQL GetAtestadoMedico_idFuncionario);
-            return funcionario.listaAtestadoMedico;
+            // select do mes selecionado
+            //totalHrsExt100
+
+            var list = new List<string>();
+            return list;
         }
 
-        public static bool SetAtestadoMedico(int idFuncionario, List<AtestadoMedico> listaAtestadoMedico, out string mensagemRetorno)
-        {
-            Funcionario funcionario = new Funcionario();
 
-            //validacao da lista
-            if (funcionario.InsertListaAtestadoMedico(listaAtestadoMedico, out mensagemRetorno))
-            {
-                //retorno positivo OK - Mensagem sucesso
-                return true;
-            }
-
-            else
-            {
-                // retorno negativo Erro - Mensagem erro
-                return false;
-            }
-        }
-
-        public static bool SetAtestadoMedico(int idFuncionario, AtestadoMedico AtestadoMedico, out string mensagemRetorno)
-        {
-
-            Funcionario funcionario = new Funcionario();
-            List<AtestadoMedico> listaAtestadoMedico = new List<AtestadoMedico>();
-            listaAtestadoMedico.Add(AtestadoMedico);
-
-            //validacao da lista
-            if (funcionario.InsertListaAtestadoMedico(listaAtestadoMedico, out mensagemRetorno))
-            {
-                //retorno positivo OK - Mensagem sucesso
-                return true;
-            }
-
-            else
-            {
-                // retorno negativo Erro - Mensagem erro
-                return false;
-            }
-        }
-
-        private bool InsertListaAtestadoMedico(List<AtestadoMedico> listaAtestadoMedico, out string mensagemRetorno)
-        {
-            try
-            {
-                for (int i = 0; i < listaAtestadoMedico.Count; i++)
-                {
-                    //insert sql idFuncionario => funcionario.listaAtestadoMedico[i];
-                }
-
-                mensagemRetorno = "Registros OK";
-
-                return true;
-            }
-
-            catch (Exception ex)
-            {
-                mensagemRetorno = $"Erro ao registrar tal: {ex.Message}";
-
-                return false;
-            }
-        }
-
-        public static void GetCertificacoes(int idFuncionario)
-        {
-
-        }
-
-        public static void SetCertificacao(int idFuncionario, Certificacoes certificacao)
-        {
-
-        }
-
-        public void PensaoDevida(bool value, int dependentes, float valor)
-        {
-
-        }*/
     }
 }
